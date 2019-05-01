@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="648110a3cd53436ca9a907477bfc60c3" Name="Diagram1">
+        <EntityTypeShape EntityType="TECAirlinesDBModel.AIRPLANE" Width="1.5" PointX="1.5" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TECAirlinesDBModel.AIRPORT" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TECAirlinesDBModel.CLIENT" Width="1.5" PointX="1.75" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TECAirlinesDBModel.FLIGHT" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TECAirlinesDBModel.PILOT" Width="1.5" PointX="1.5" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TECAirlinesDBModel.RESERVATION" Width="1.5" PointX="4" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TECAirlinesDBModel.UNIVERSITY" Width="1.5" PointX="1.75" PointY="20" IsExpanded="true" />
+        <EntityTypeShape EntityType="TECAirlinesDBModel.FROUTE" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="TECAirlinesDBModel.ALL_FLIGHT" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TECAirlinesDBModel.CLIENT_INFO" Width="1.5" PointX="6.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TECAirlinesDBModel.PLANE_INFO" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="TECAirlinesDBModel.FK_PILOT_ID_AIRPLANE" ManuallyRouted="false" />
+        <AssociationConnector Association="TECAirlinesDBModel.FK_PLANE_ID_FLIGHT" ManuallyRouted="false" />
+        <AssociationConnector Association="TECAirlinesDBModel.FK_DESTINATION_FROUTE" ManuallyRouted="false" />
+        <AssociationConnector Association="TECAirlinesDBModel.FK_ORIGIN_FROUTE" ManuallyRouted="false" />
+        <AssociationConnector Association="TECAirlinesDBModel.FK_CLIENT_ID_RESERVATION" ManuallyRouted="false" />
+        <AssociationConnector Association="TECAirlinesDBModel.FK_UNIVERSITY_ID_CLIENT" ManuallyRouted="false" />
+        <AssociationConnector Association="TECAirlinesDBModel.FK_FLIGHT_ID_FROUTE" ManuallyRouted="false" />
+        <AssociationConnector Association="TECAirlinesDBModel.FK_FLIGHT_ID_RESERVATION" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

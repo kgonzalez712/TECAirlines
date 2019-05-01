@@ -1,0 +1,1668 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TECAirlinesDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AIRPLANE">
+          <Key>
+            <PropertyRef Name="AIRPLANE_ID" />
+          </Key>
+          <Property Name="AIRPLANE_ID" Type="int" Nullable="false" />
+          <Property Name="PILOT_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AIRPORT">
+          <Key>
+            <PropertyRef Name="IATA_CODE" />
+          </Key>
+          <Property Name="AIRPORT_NAME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IATA_CODE" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="STATE_CODE" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="COUNTRY_CODE" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="COUNTRY_NAME" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CLIENT">
+          <Key>
+            <PropertyRef Name="CLIENT_ID" />
+          </Key>
+          <Property Name="CLIENT_ID" Type="char" MaxLength="9" Nullable="false" />
+          <Property Name="CLIENT_FNAME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CLIENT_LNAME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CLIENT_UID" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="CLIENT_PHONENO" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="CLIENT_CARDNO" Type="char" MaxLength="16" Nullable="false" />
+          <Property Name="CLIENT_MILES" Type="int" />
+          <Property Name="CLIENT_EMAIL" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CLIENT_PASSWRD" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UNIVERSITY_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FLIGHT">
+          <Key>
+            <PropertyRef Name="FLIGHT_ID" />
+          </Key>
+          <Property Name="FLIGHT_ID" Type="int" Nullable="false" />
+          <Property Name="PLANE_ID" Type="int" Nullable="false" />
+          <Property Name="ORIGIN_AIRPORT" Type="char" MaxLength="3" />
+          <Property Name="DESTINATION_AIRPORT" Type="char" MaxLength="3" />
+          <Property Name="FSTATUS" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TECAirlinesDB.dbo.FROUTE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="FROUTE">
+          <Key>
+            <PropertyRef Name="FLIGHT_ID" />
+            <PropertyRef Name="ORIGIN" />
+            <PropertyRef Name="DESTINATION" />
+            <PropertyRef Name="FLIGHT_MILES" />
+            <PropertyRef Name="CAPACITY" />
+            <PropertyRef Name="ECO_PRICE" />
+            <PropertyRef Name="EJE_PRICE" />
+            <PropertyRef Name="DATE_HOUR" />
+            <PropertyRef Name="IS_PROMOTION" />
+            <PropertyRef Name="LUGGAGE_CAPACITY" />
+          </Key>
+          <Property Name="FLIGHT_ID" Type="int" Nullable="false" />
+          <Property Name="ORIGIN" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="DESTINATION" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="FLIGHT_MILES" Type="int" Nullable="false" />
+          <Property Name="CAPACITY" Type="int" Nullable="false" />
+          <Property Name="ECO_PRICE" Type="int" Nullable="false" />
+          <Property Name="EJE_PRICE" Type="int" Nullable="false" />
+          <Property Name="DATE_HOUR" Type="datetime" Nullable="false" />
+          <Property Name="IS_PROMOTION" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="LUGGAGE_CAPACITY" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PILOT">
+          <Key>
+            <PropertyRef Name="PILOT_ID" />
+          </Key>
+          <Property Name="PILOT_ID" Type="int" Nullable="false" />
+          <Property Name="PILOT_FNAME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PILOT_LNAME" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RESERVATION">
+          <Key>
+            <PropertyRef Name="RESERVATION_ID" />
+          </Key>
+          <Property Name="RESERVATION_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TICKET_COUNT" Type="int" Nullable="false" />
+          <Property Name="LUGGAGE_COUNT" Type="int" Nullable="false" />
+          <Property Name="SEATS" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CHECKIN" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="T_TYPE" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="PRICE" Type="int" Nullable="false" />
+          <Property Name="CLIENT_ID" Type="char" MaxLength="9" Nullable="false" />
+          <Property Name="FLIGHT_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UNIVERSITY">
+          <Key>
+            <PropertyRef Name="UNIVERSITY_ID" />
+          </Key>
+          <Property Name="UNIVERSITY_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UNIVERSITY_NAME" Type="varchar" MaxLength="60" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TECAirlinesDB.dbo.ALL_FLIGHT' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ALL_FLIGHT">
+          <Key>
+            <PropertyRef Name="FLIGHT_ID" />
+            <PropertyRef Name="PLANE_ID" />
+            <PropertyRef Name="FSTATUS" />
+            <PropertyRef Name="CAPACITY" />
+            <PropertyRef Name="DATE_HOUR" />
+            <PropertyRef Name="FLIGHT_MILES" />
+            <PropertyRef Name="ORIGIN" />
+            <PropertyRef Name="DESTINATION" />
+            <PropertyRef Name="ECO_PRICE" />
+            <PropertyRef Name="EJE_PRICE" />
+            <PropertyRef Name="LUGGAGE_CAPACITY" />
+            <PropertyRef Name="IS_PROMOTION" />
+          </Key>
+          <Property Name="FLIGHT_ID" Type="int" Nullable="false" />
+          <Property Name="PLANE_ID" Type="int" Nullable="false" />
+          <Property Name="ORIGIN_AIRPORT" Type="char" MaxLength="3" />
+          <Property Name="DESTINATION_AIRPORT" Type="char" MaxLength="3" />
+          <Property Name="FSTATUS" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="CAPACITY" Type="int" Nullable="false" />
+          <Property Name="DATE_HOUR" Type="datetime" Nullable="false" />
+          <Property Name="FLIGHT_MILES" Type="int" Nullable="false" />
+          <Property Name="ORIGIN" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="DESTINATION" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="ECO_PRICE" Type="int" Nullable="false" />
+          <Property Name="EJE_PRICE" Type="int" Nullable="false" />
+          <Property Name="LUGGAGE_CAPACITY" Type="int" Nullable="false" />
+          <Property Name="IS_PROMOTION" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TECAirlinesDB.dbo.CLIENT_INFO' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="CLIENT_INFO">
+          <Key>
+            <PropertyRef Name="CLIENT_ID" />
+            <PropertyRef Name="CLIENT_FNAME" />
+            <PropertyRef Name="CLIENT_LNAME" />
+            <PropertyRef Name="CLIENT_UID" />
+            <PropertyRef Name="CLIENT_PHONENO" />
+            <PropertyRef Name="CLIENT_CARDNO" />
+            <PropertyRef Name="CLIENT_EMAIL" />
+            <PropertyRef Name="CLIENT_PASSWRD" />
+            <PropertyRef Name="UNIVERSITY_NAME" />
+          </Key>
+          <Property Name="CLIENT_ID" Type="char" MaxLength="9" Nullable="false" />
+          <Property Name="CLIENT_FNAME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CLIENT_LNAME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CLIENT_UID" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="CLIENT_PHONENO" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="CLIENT_CARDNO" Type="char" MaxLength="16" Nullable="false" />
+          <Property Name="CLIENT_MILES" Type="int" />
+          <Property Name="CLIENT_EMAIL" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CLIENT_PASSWRD" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UNIVERSITY_NAME" Type="varchar" MaxLength="60" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TECAirlinesDB.dbo.PLANE_INFO' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="PLANE_INFO">
+          <Key>
+            <PropertyRef Name="AIRPLANE_ID" />
+            <PropertyRef Name="PILOT_ID" />
+            <PropertyRef Name="PILOT_FNAME" />
+            <PropertyRef Name="PILOT_LNAME" />
+          </Key>
+          <Property Name="AIRPLANE_ID" Type="int" Nullable="false" />
+          <Property Name="PILOT_ID" Type="int" Nullable="false" />
+          <Property Name="PILOT_FNAME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PILOT_LNAME" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CLIENT_ID_RESERVATION">
+          <End Role="CLIENT" Type="Self.CLIENT" Multiplicity="1" />
+          <End Role="RESERVATION" Type="Self.RESERVATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENT">
+              <PropertyRef Name="CLIENT_ID" />
+            </Principal>
+            <Dependent Role="RESERVATION">
+              <PropertyRef Name="CLIENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DESTINATION_FROUTE">
+          <End Role="AIRPORT" Type="Self.AIRPORT" Multiplicity="1" />
+          <End Role="FROUTE" Type="Self.FROUTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AIRPORT">
+              <PropertyRef Name="IATA_CODE" />
+            </Principal>
+            <Dependent Role="FROUTE">
+              <PropertyRef Name="DESTINATION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FLIGHT_ID_FROUTE">
+          <End Role="FLIGHT" Type="Self.FLIGHT" Multiplicity="1" />
+          <End Role="FROUTE" Type="Self.FROUTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FLIGHT">
+              <PropertyRef Name="FLIGHT_ID" />
+            </Principal>
+            <Dependent Role="FROUTE">
+              <PropertyRef Name="FLIGHT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FLIGHT_ID_RESERVATION">
+          <End Role="FLIGHT" Type="Self.FLIGHT" Multiplicity="1" />
+          <End Role="RESERVATION" Type="Self.RESERVATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FLIGHT">
+              <PropertyRef Name="FLIGHT_ID" />
+            </Principal>
+            <Dependent Role="RESERVATION">
+              <PropertyRef Name="FLIGHT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORIGIN_FROUTE">
+          <End Role="AIRPORT" Type="Self.AIRPORT" Multiplicity="1" />
+          <End Role="FROUTE" Type="Self.FROUTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AIRPORT">
+              <PropertyRef Name="IATA_CODE" />
+            </Principal>
+            <Dependent Role="FROUTE">
+              <PropertyRef Name="ORIGIN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PILOT_ID_AIRPLANE">
+          <End Role="PILOT" Type="Self.PILOT" Multiplicity="1" />
+          <End Role="AIRPLANE" Type="Self.AIRPLANE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PILOT">
+              <PropertyRef Name="PILOT_ID" />
+            </Principal>
+            <Dependent Role="AIRPLANE">
+              <PropertyRef Name="PILOT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PLANE_ID_FLIGHT">
+          <End Role="AIRPLANE" Type="Self.AIRPLANE" Multiplicity="1" />
+          <End Role="FLIGHT" Type="Self.FLIGHT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AIRPLANE">
+              <PropertyRef Name="AIRPLANE_ID" />
+            </Principal>
+            <Dependent Role="FLIGHT">
+              <PropertyRef Name="PLANE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UNIVERSITY_ID_CLIENT">
+          <End Role="UNIVERSITY" Type="Self.UNIVERSITY" Multiplicity="1" />
+          <End Role="CLIENT" Type="Self.CLIENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UNIVERSITY">
+              <PropertyRef Name="UNIVERSITY_ID" />
+            </Principal>
+            <Dependent Role="CLIENT">
+              <PropertyRef Name="UNIVERSITY_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="ADD_MILES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="MILES" Type="int" Mode="In" />
+        </Function>
+        <Function Name="CHANGE_STATUS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="CHECKIN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DELETE_ROUTE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ORI" Type="char" Mode="In" />
+          <Parameter Name="DES" Type="char" Mode="In" />
+          <Parameter Name="FID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="EMAIL_CONFIRMATION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GET_AIRPLANE_BYD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GET_AIRPORT_BYID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="char" Mode="In" />
+        </Function>
+        <Function Name="GET_ALL_AIRPLANE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GET_ALL_AIRPORTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GET_ALL_CLIENT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GET_ALL_PILOT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GET_ALL_UNIVERSITY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GET_CLIENT_BYID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="char" Mode="In" />
+        </Function>
+        <Function Name="GET_CLIENT_CC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GET_CLIENT_ID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EMAIL" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GET_CLIENT_INFO_BYID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GET_CLIENTE_INFO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EMAIL" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GET_FLIGHT_BYOD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="O" Type="char" Mode="In" />
+          <Parameter Name="D" Type="char" Mode="In" />
+        </Function>
+        <Function Name="GET_FLIGHT_ID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GET_NOT_STUDENT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GET_PILOT_BYID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GET_PLANE_INFO_BYID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GET_PROMTIONS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GET_REGULAR_FLIGHTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GET_STUDENT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GET_UNIVERSITY_BYID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="INSERT_AIRPLANE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="PID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="INSERT_AIRPORT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NAME" Type="varchar" Mode="In" />
+          <Parameter Name="ICODE" Type="char" Mode="In" />
+          <Parameter Name="SCODE" Type="char" Mode="In" />
+          <Parameter Name="CCODE" Type="char" Mode="In" />
+          <Parameter Name="COUNTRY" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="INSERT_CLIENT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="char" Mode="In" />
+          <Parameter Name="FN" Type="varchar" Mode="In" />
+          <Parameter Name="LN" Type="varchar" Mode="In" />
+          <Parameter Name="UID" Type="char" Mode="In" />
+          <Parameter Name="PN" Type="char" Mode="In" />
+          <Parameter Name="CN" Type="char" Mode="In" />
+          <Parameter Name="M" Type="int" Mode="In" />
+          <Parameter Name="EM" Type="varchar" Mode="In" />
+          <Parameter Name="PW" Type="varchar" Mode="In" />
+          <Parameter Name="UC" Type="int" Mode="In" />
+        </Function>
+        <Function Name="INSERT_FLIGHT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="AID" Type="int" Mode="In" />
+          <Parameter Name="O" Type="char" Mode="In" />
+          <Parameter Name="D" Type="char" Mode="In" />
+          <Parameter Name="FS" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="INSERT_PILOT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="FN" Type="varchar" Mode="In" />
+          <Parameter Name="LN" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="INSERT_RESERVATION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TICKET_COUNT" Type="int" Mode="In" />
+          <Parameter Name="LUGGAGE_COUNT" Type="int" Mode="In" />
+          <Parameter Name="SEATS" Type="varchar" Mode="In" />
+          <Parameter Name="CHECKIN" Type="char" Mode="In" />
+          <Parameter Name="TTYPE" Type="varchar" Mode="In" />
+          <Parameter Name="PRICE" Type="int" Mode="In" />
+          <Parameter Name="CLIENT_ID" Type="char" Mode="In" />
+          <Parameter Name="FLIGHT_ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="INSERT_ROUTE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="ORI" Type="char" Mode="In" />
+          <Parameter Name="DES" Type="char" Mode="In" />
+          <Parameter Name="FM" Type="int" Mode="In" />
+          <Parameter Name="C" Type="int" Mode="In" />
+          <Parameter Name="ECP" Type="int" Mode="In" />
+          <Parameter Name="EJP" Type="int" Mode="In" />
+          <Parameter Name="DH" Type="datetime" Mode="In" />
+          <Parameter Name="IP" Type="char" Mode="In" />
+          <Parameter Name="LC" Type="int" Mode="In" />
+        </Function>
+        <Function Name="INSERT_UNIVERSITY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NAME" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SELECT_FLIGHT_ID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SELECT_RESERVATION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SELECT_RESERVATION_BYCID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SELECT_RESERVATION_ID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SET_SEATS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="SEATS" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="TECAirlinesDBModelStoreContainer">
+          <EntitySet Name="AIRPLANE" EntityType="Self.AIRPLANE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AIRPORT" EntityType="Self.AIRPORT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CLIENT" EntityType="Self.CLIENT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FLIGHT" EntityType="Self.FLIGHT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PILOT" EntityType="Self.PILOT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RESERVATION" EntityType="Self.RESERVATION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UNIVERSITY" EntityType="Self.UNIVERSITY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FROUTE" EntityType="Self.FROUTE" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [FROUTE].[FLIGHT_ID] AS [FLIGHT_ID], 
+    [FROUTE].[ORIGIN] AS [ORIGIN], 
+    [FROUTE].[DESTINATION] AS [DESTINATION], 
+    [FROUTE].[FLIGHT_MILES] AS [FLIGHT_MILES], 
+    [FROUTE].[CAPACITY] AS [CAPACITY], 
+    [FROUTE].[ECO_PRICE] AS [ECO_PRICE], 
+    [FROUTE].[EJE_PRICE] AS [EJE_PRICE], 
+    [FROUTE].[DATE_HOUR] AS [DATE_HOUR], 
+    [FROUTE].[IS_PROMOTION] AS [IS_PROMOTION], 
+    [FROUTE].[LUGGAGE_CAPACITY] AS [LUGGAGE_CAPACITY]
+    FROM [dbo].[FROUTE] AS [FROUTE]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ALL_FLIGHT" EntityType="Self.ALL_FLIGHT" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ALL_FLIGHT].[FLIGHT_ID] AS [FLIGHT_ID], 
+    [ALL_FLIGHT].[PLANE_ID] AS [PLANE_ID], 
+    [ALL_FLIGHT].[ORIGIN_AIRPORT] AS [ORIGIN_AIRPORT], 
+    [ALL_FLIGHT].[DESTINATION_AIRPORT] AS [DESTINATION_AIRPORT], 
+    [ALL_FLIGHT].[FSTATUS] AS [FSTATUS], 
+    [ALL_FLIGHT].[CAPACITY] AS [CAPACITY], 
+    [ALL_FLIGHT].[DATE_HOUR] AS [DATE_HOUR], 
+    [ALL_FLIGHT].[FLIGHT_MILES] AS [FLIGHT_MILES], 
+    [ALL_FLIGHT].[ORIGIN] AS [ORIGIN], 
+    [ALL_FLIGHT].[DESTINATION] AS [DESTINATION], 
+    [ALL_FLIGHT].[ECO_PRICE] AS [ECO_PRICE], 
+    [ALL_FLIGHT].[EJE_PRICE] AS [EJE_PRICE], 
+    [ALL_FLIGHT].[LUGGAGE_CAPACITY] AS [LUGGAGE_CAPACITY], 
+    [ALL_FLIGHT].[IS_PROMOTION] AS [IS_PROMOTION]
+    FROM [dbo].[ALL_FLIGHT] AS [ALL_FLIGHT]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="CLIENT_INFO" EntityType="Self.CLIENT_INFO" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [CLIENT_INFO].[CLIENT_ID] AS [CLIENT_ID], 
+    [CLIENT_INFO].[CLIENT_FNAME] AS [CLIENT_FNAME], 
+    [CLIENT_INFO].[CLIENT_LNAME] AS [CLIENT_LNAME], 
+    [CLIENT_INFO].[CLIENT_UID] AS [CLIENT_UID], 
+    [CLIENT_INFO].[CLIENT_PHONENO] AS [CLIENT_PHONENO], 
+    [CLIENT_INFO].[CLIENT_CARDNO] AS [CLIENT_CARDNO], 
+    [CLIENT_INFO].[CLIENT_MILES] AS [CLIENT_MILES], 
+    [CLIENT_INFO].[CLIENT_EMAIL] AS [CLIENT_EMAIL], 
+    [CLIENT_INFO].[CLIENT_PASSWRD] AS [CLIENT_PASSWRD], 
+    [CLIENT_INFO].[UNIVERSITY_NAME] AS [UNIVERSITY_NAME]
+    FROM [dbo].[CLIENT_INFO] AS [CLIENT_INFO]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="PLANE_INFO" EntityType="Self.PLANE_INFO" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [PLANE_INFO].[AIRPLANE_ID] AS [AIRPLANE_ID], 
+    [PLANE_INFO].[PILOT_ID] AS [PILOT_ID], 
+    [PLANE_INFO].[PILOT_FNAME] AS [PILOT_FNAME], 
+    [PLANE_INFO].[PILOT_LNAME] AS [PILOT_LNAME]
+    FROM [dbo].[PLANE_INFO] AS [PLANE_INFO]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_CLIENT_ID_RESERVATION" Association="Self.FK_CLIENT_ID_RESERVATION">
+            <End Role="CLIENT" EntitySet="CLIENT" />
+            <End Role="RESERVATION" EntitySet="RESERVATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DESTINATION_FROUTE" Association="Self.FK_DESTINATION_FROUTE">
+            <End Role="AIRPORT" EntitySet="AIRPORT" />
+            <End Role="FROUTE" EntitySet="FROUTE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FLIGHT_ID_FROUTE" Association="Self.FK_FLIGHT_ID_FROUTE">
+            <End Role="FLIGHT" EntitySet="FLIGHT" />
+            <End Role="FROUTE" EntitySet="FROUTE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FLIGHT_ID_RESERVATION" Association="Self.FK_FLIGHT_ID_RESERVATION">
+            <End Role="FLIGHT" EntitySet="FLIGHT" />
+            <End Role="RESERVATION" EntitySet="RESERVATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORIGIN_FROUTE" Association="Self.FK_ORIGIN_FROUTE">
+            <End Role="AIRPORT" EntitySet="AIRPORT" />
+            <End Role="FROUTE" EntitySet="FROUTE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PILOT_ID_AIRPLANE" Association="Self.FK_PILOT_ID_AIRPLANE">
+            <End Role="PILOT" EntitySet="PILOT" />
+            <End Role="AIRPLANE" EntitySet="AIRPLANE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PLANE_ID_FLIGHT" Association="Self.FK_PLANE_ID_FLIGHT">
+            <End Role="AIRPLANE" EntitySet="AIRPLANE" />
+            <End Role="FLIGHT" EntitySet="FLIGHT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UNIVERSITY_ID_CLIENT" Association="Self.FK_UNIVERSITY_ID_CLIENT">
+            <End Role="UNIVERSITY" EntitySet="UNIVERSITY" />
+            <End Role="CLIENT" EntitySet="CLIENT" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TECAirlinesDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AIRPLANE">
+          <Key>
+            <PropertyRef Name="AIRPLANE_ID" />
+          </Key>
+          <Property Name="AIRPLANE_ID" Type="Int32" Nullable="false" />
+          <Property Name="PILOT_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PILOT" Relationship="Self.FK_PILOT_ID_AIRPLANE" FromRole="AIRPLANE" ToRole="PILOT" />
+          <NavigationProperty Name="FLIGHTs" Relationship="Self.FK_PLANE_ID_FLIGHT" FromRole="AIRPLANE" ToRole="FLIGHT" />
+        </EntityType>
+        <EntityType Name="AIRPORT">
+          <Key>
+            <PropertyRef Name="IATA_CODE" />
+          </Key>
+          <Property Name="AIRPORT_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IATA_CODE" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="STATE_CODE" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="COUNTRY_CODE" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="COUNTRY_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="FROUTEs" Relationship="Self.FK_DESTINATION_FROUTE" FromRole="AIRPORT" ToRole="FROUTE" />
+          <NavigationProperty Name="FROUTEs1" Relationship="Self.FK_ORIGIN_FROUTE" FromRole="AIRPORT" ToRole="FROUTE" />
+        </EntityType>
+        <EntityType Name="CLIENT">
+          <Key>
+            <PropertyRef Name="CLIENT_ID" />
+          </Key>
+          <Property Name="CLIENT_ID" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CLIENT_FNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CLIENT_LNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CLIENT_UID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CLIENT_PHONENO" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CLIENT_CARDNO" Type="String" MaxLength="16" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CLIENT_MILES" Type="Int32" />
+          <Property Name="CLIENT_EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CLIENT_PASSWRD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UNIVERSITY_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="RESERVATIONs" Relationship="Self.FK_CLIENT_ID_RESERVATION" FromRole="CLIENT" ToRole="RESERVATION" />
+          <NavigationProperty Name="UNIVERSITY" Relationship="Self.FK_UNIVERSITY_ID_CLIENT" FromRole="CLIENT" ToRole="UNIVERSITY" />
+        </EntityType>
+        <EntityType Name="FLIGHT">
+          <Key>
+            <PropertyRef Name="FLIGHT_ID" />
+          </Key>
+          <Property Name="FLIGHT_ID" Type="Int32" Nullable="false" />
+          <Property Name="PLANE_ID" Type="Int32" Nullable="false" />
+          <Property Name="ORIGIN_AIRPORT" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="DESTINATION_AIRPORT" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="FSTATUS" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="AIRPLANE" Relationship="Self.FK_PLANE_ID_FLIGHT" FromRole="FLIGHT" ToRole="AIRPLANE" />
+          <NavigationProperty Name="FROUTEs" Relationship="Self.FK_FLIGHT_ID_FROUTE" FromRole="FLIGHT" ToRole="FROUTE" />
+          <NavigationProperty Name="RESERVATIONs" Relationship="Self.FK_FLIGHT_ID_RESERVATION" FromRole="FLIGHT" ToRole="RESERVATION" />
+        </EntityType>
+        <EntityType Name="PILOT">
+          <Key>
+            <PropertyRef Name="PILOT_ID" />
+          </Key>
+          <Property Name="PILOT_ID" Type="Int32" Nullable="false" />
+          <Property Name="PILOT_FNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PILOT_LNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="AIRPLANEs" Relationship="Self.FK_PILOT_ID_AIRPLANE" FromRole="PILOT" ToRole="AIRPLANE" />
+        </EntityType>
+        <EntityType Name="RESERVATION">
+          <Key>
+            <PropertyRef Name="RESERVATION_ID" />
+          </Key>
+          <Property Name="RESERVATION_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TICKET_COUNT" Type="Int32" Nullable="false" />
+          <Property Name="LUGGAGE_COUNT" Type="Int32" Nullable="false" />
+          <Property Name="SEATS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CHECKIN" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="T_TYPE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PRICE" Type="Int32" Nullable="false" />
+          <Property Name="CLIENT_ID" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="FLIGHT_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CLIENT" Relationship="Self.FK_CLIENT_ID_RESERVATION" FromRole="RESERVATION" ToRole="CLIENT" />
+          <NavigationProperty Name="FLIGHT" Relationship="Self.FK_FLIGHT_ID_RESERVATION" FromRole="RESERVATION" ToRole="FLIGHT" />
+        </EntityType>
+        <EntityType Name="UNIVERSITY">
+          <Key>
+            <PropertyRef Name="UNIVERSITY_ID" />
+          </Key>
+          <Property Name="UNIVERSITY_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UNIVERSITY_NAME" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="CLIENTs" Relationship="Self.FK_UNIVERSITY_ID_CLIENT" FromRole="UNIVERSITY" ToRole="CLIENT" />
+        </EntityType>
+        <EntityType Name="FROUTE">
+          <Key>
+            <PropertyRef Name="FLIGHT_ID" />
+            <PropertyRef Name="ORIGIN" />
+            <PropertyRef Name="DESTINATION" />
+            <PropertyRef Name="FLIGHT_MILES" />
+            <PropertyRef Name="CAPACITY" />
+            <PropertyRef Name="ECO_PRICE" />
+            <PropertyRef Name="EJE_PRICE" />
+            <PropertyRef Name="DATE_HOUR" />
+            <PropertyRef Name="IS_PROMOTION" />
+            <PropertyRef Name="LUGGAGE_CAPACITY" />
+          </Key>
+          <Property Name="FLIGHT_ID" Type="Int32" Nullable="false" />
+          <Property Name="ORIGIN" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="DESTINATION" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="FLIGHT_MILES" Type="Int32" Nullable="false" />
+          <Property Name="CAPACITY" Type="Int32" Nullable="false" />
+          <Property Name="ECO_PRICE" Type="Int32" Nullable="false" />
+          <Property Name="EJE_PRICE" Type="Int32" Nullable="false" />
+          <Property Name="DATE_HOUR" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IS_PROMOTION" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="LUGGAGE_CAPACITY" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AIRPORT" Relationship="Self.FK_DESTINATION_FROUTE" FromRole="FROUTE" ToRole="AIRPORT" />
+          <NavigationProperty Name="AIRPORT1" Relationship="Self.FK_ORIGIN_FROUTE" FromRole="FROUTE" ToRole="AIRPORT" />
+          <NavigationProperty Name="FLIGHT" Relationship="Self.FK_FLIGHT_ID_FROUTE" FromRole="FROUTE" ToRole="FLIGHT" />
+        </EntityType>
+        <EntityType Name="ALL_FLIGHT">
+          <Key>
+            <PropertyRef Name="FLIGHT_ID" />
+            <PropertyRef Name="PLANE_ID" />
+            <PropertyRef Name="FSTATUS" />
+            <PropertyRef Name="CAPACITY" />
+            <PropertyRef Name="DATE_HOUR" />
+            <PropertyRef Name="FLIGHT_MILES" />
+            <PropertyRef Name="ORIGIN" />
+            <PropertyRef Name="DESTINATION" />
+            <PropertyRef Name="ECO_PRICE" />
+            <PropertyRef Name="EJE_PRICE" />
+            <PropertyRef Name="LUGGAGE_CAPACITY" />
+            <PropertyRef Name="IS_PROMOTION" />
+          </Key>
+          <Property Name="FLIGHT_ID" Type="Int32" Nullable="false" />
+          <Property Name="PLANE_ID" Type="Int32" Nullable="false" />
+          <Property Name="ORIGIN_AIRPORT" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="DESTINATION_AIRPORT" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="FSTATUS" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CAPACITY" Type="Int32" Nullable="false" />
+          <Property Name="DATE_HOUR" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FLIGHT_MILES" Type="Int32" Nullable="false" />
+          <Property Name="ORIGIN" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="DESTINATION" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ECO_PRICE" Type="Int32" Nullable="false" />
+          <Property Name="EJE_PRICE" Type="Int32" Nullable="false" />
+          <Property Name="LUGGAGE_CAPACITY" Type="Int32" Nullable="false" />
+          <Property Name="IS_PROMOTION" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CLIENT_INFO">
+          <Key>
+            <PropertyRef Name="CLIENT_ID" />
+            <PropertyRef Name="CLIENT_FNAME" />
+            <PropertyRef Name="CLIENT_LNAME" />
+            <PropertyRef Name="CLIENT_UID" />
+            <PropertyRef Name="CLIENT_PHONENO" />
+            <PropertyRef Name="CLIENT_CARDNO" />
+            <PropertyRef Name="CLIENT_EMAIL" />
+            <PropertyRef Name="CLIENT_PASSWRD" />
+            <PropertyRef Name="UNIVERSITY_NAME" />
+          </Key>
+          <Property Name="CLIENT_ID" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CLIENT_FNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CLIENT_LNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CLIENT_UID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CLIENT_PHONENO" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CLIENT_CARDNO" Type="String" MaxLength="16" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CLIENT_MILES" Type="Int32" />
+          <Property Name="CLIENT_EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CLIENT_PASSWRD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UNIVERSITY_NAME" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PLANE_INFO">
+          <Key>
+            <PropertyRef Name="AIRPLANE_ID" />
+            <PropertyRef Name="PILOT_ID" />
+            <PropertyRef Name="PILOT_FNAME" />
+            <PropertyRef Name="PILOT_LNAME" />
+          </Key>
+          <Property Name="AIRPLANE_ID" Type="Int32" Nullable="false" />
+          <Property Name="PILOT_ID" Type="Int32" Nullable="false" />
+          <Property Name="PILOT_FNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PILOT_LNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_PILOT_ID_AIRPLANE">
+          <End Role="PILOT" Type="Self.PILOT" Multiplicity="1" />
+          <End Role="AIRPLANE" Type="Self.AIRPLANE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PILOT">
+              <PropertyRef Name="PILOT_ID" />
+            </Principal>
+            <Dependent Role="AIRPLANE">
+              <PropertyRef Name="PILOT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PLANE_ID_FLIGHT">
+          <End Role="AIRPLANE" Type="Self.AIRPLANE" Multiplicity="1" />
+          <End Role="FLIGHT" Type="Self.FLIGHT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AIRPLANE">
+              <PropertyRef Name="AIRPLANE_ID" />
+            </Principal>
+            <Dependent Role="FLIGHT">
+              <PropertyRef Name="PLANE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DESTINATION_FROUTE">
+          <End Role="AIRPORT" Type="Self.AIRPORT" Multiplicity="1" />
+          <End Role="FROUTE" Type="Self.FROUTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AIRPORT">
+              <PropertyRef Name="IATA_CODE" />
+            </Principal>
+            <Dependent Role="FROUTE">
+              <PropertyRef Name="DESTINATION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORIGIN_FROUTE">
+          <End Role="AIRPORT" Type="Self.AIRPORT" Multiplicity="1" />
+          <End Role="FROUTE" Type="Self.FROUTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AIRPORT">
+              <PropertyRef Name="IATA_CODE" />
+            </Principal>
+            <Dependent Role="FROUTE">
+              <PropertyRef Name="ORIGIN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CLIENT_ID_RESERVATION">
+          <End Role="CLIENT" Type="Self.CLIENT" Multiplicity="1" />
+          <End Role="RESERVATION" Type="Self.RESERVATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENT">
+              <PropertyRef Name="CLIENT_ID" />
+            </Principal>
+            <Dependent Role="RESERVATION">
+              <PropertyRef Name="CLIENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UNIVERSITY_ID_CLIENT">
+          <End Role="UNIVERSITY" Type="Self.UNIVERSITY" Multiplicity="1" />
+          <End Role="CLIENT" Type="Self.CLIENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UNIVERSITY">
+              <PropertyRef Name="UNIVERSITY_ID" />
+            </Principal>
+            <Dependent Role="CLIENT">
+              <PropertyRef Name="UNIVERSITY_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FLIGHT_ID_FROUTE">
+          <End Role="FLIGHT" Type="Self.FLIGHT" Multiplicity="1" />
+          <End Role="FROUTE" Type="Self.FROUTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FLIGHT">
+              <PropertyRef Name="FLIGHT_ID" />
+            </Principal>
+            <Dependent Role="FROUTE">
+              <PropertyRef Name="FLIGHT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FLIGHT_ID_RESERVATION">
+          <End Role="FLIGHT" Type="Self.FLIGHT" Multiplicity="1" />
+          <End Role="RESERVATION" Type="Self.RESERVATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FLIGHT">
+              <PropertyRef Name="FLIGHT_ID" />
+            </Principal>
+            <Dependent Role="RESERVATION">
+              <PropertyRef Name="FLIGHT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TECAirlinesDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AIRPLANEs" EntityType="Self.AIRPLANE" />
+          <EntitySet Name="AIRPORTs" EntityType="Self.AIRPORT" />
+          <EntitySet Name="CLIENTs" EntityType="Self.CLIENT" />
+          <EntitySet Name="FLIGHTs" EntityType="Self.FLIGHT" />
+          <EntitySet Name="PILOTs" EntityType="Self.PILOT" />
+          <EntitySet Name="RESERVATIONs" EntityType="Self.RESERVATION" />
+          <EntitySet Name="UNIVERSITies" EntityType="Self.UNIVERSITY" />
+          <EntitySet Name="FROUTEs" EntityType="Self.FROUTE" />
+          <EntitySet Name="ALL_FLIGHT" EntityType="Self.ALL_FLIGHT" />
+          <EntitySet Name="CLIENT_INFO" EntityType="Self.CLIENT_INFO" />
+          <EntitySet Name="PLANE_INFO" EntityType="Self.PLANE_INFO" />
+          <AssociationSet Name="FK_PILOT_ID_AIRPLANE" Association="Self.FK_PILOT_ID_AIRPLANE">
+            <End Role="PILOT" EntitySet="PILOTs" />
+            <End Role="AIRPLANE" EntitySet="AIRPLANEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PLANE_ID_FLIGHT" Association="Self.FK_PLANE_ID_FLIGHT">
+            <End Role="AIRPLANE" EntitySet="AIRPLANEs" />
+            <End Role="FLIGHT" EntitySet="FLIGHTs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DESTINATION_FROUTE" Association="Self.FK_DESTINATION_FROUTE">
+            <End Role="AIRPORT" EntitySet="AIRPORTs" />
+            <End Role="FROUTE" EntitySet="FROUTEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORIGIN_FROUTE" Association="Self.FK_ORIGIN_FROUTE">
+            <End Role="AIRPORT" EntitySet="AIRPORTs" />
+            <End Role="FROUTE" EntitySet="FROUTEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CLIENT_ID_RESERVATION" Association="Self.FK_CLIENT_ID_RESERVATION">
+            <End Role="CLIENT" EntitySet="CLIENTs" />
+            <End Role="RESERVATION" EntitySet="RESERVATIONs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UNIVERSITY_ID_CLIENT" Association="Self.FK_UNIVERSITY_ID_CLIENT">
+            <End Role="UNIVERSITY" EntitySet="UNIVERSITies" />
+            <End Role="CLIENT" EntitySet="CLIENTs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FLIGHT_ID_FROUTE" Association="Self.FK_FLIGHT_ID_FROUTE">
+            <End Role="FLIGHT" EntitySet="FLIGHTs" />
+            <End Role="FROUTE" EntitySet="FROUTEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FLIGHT_ID_RESERVATION" Association="Self.FK_FLIGHT_ID_RESERVATION">
+            <End Role="FLIGHT" EntitySet="FLIGHTs" />
+            <End Role="RESERVATION" EntitySet="RESERVATIONs" />
+          </AssociationSet>
+          <FunctionImport Name="ADD_MILES">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="MILES" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="CHECKIN">
+          <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DELETE_ROUTE">
+            <Parameter Name="ORI" Mode="In" Type="String" />
+            <Parameter Name="DES" Mode="In" Type="String" />
+            <Parameter Name="FID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="EMAIL_CONFIRMATION" ReturnType="Collection(TECAirlinesDBModel.EMAIL_CONFIRMATION_Result)">
+          </FunctionImport>
+          <FunctionImport Name="GET_AIRPLANE_BYD" ReturnType="Collection(TECAirlinesDBModel.GET_AIRPLANE_BYD_Result)">
+          <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GET_AIRPORT_BYID" ReturnType="Collection(TECAirlinesDBModel.GET_AIRPORT_BYID_Result)">
+          <Parameter Name="ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GET_ALL_AIRPLANE" ReturnType="Collection(TECAirlinesDBModel.GET_ALL_AIRPLANE_Result)" />
+          <FunctionImport Name="GET_ALL_AIRPORTS" ReturnType="Collection(TECAirlinesDBModel.GET_ALL_AIRPORTS_Result)" />
+          <FunctionImport Name="GET_ALL_CLIENT" ReturnType="Collection(TECAirlinesDBModel.GET_ALL_CLIENT_Result)" />
+          <FunctionImport Name="GET_ALL_PILOT" ReturnType="Collection(TECAirlinesDBModel.GET_ALL_PILOT_Result)" />
+          <FunctionImport Name="GET_ALL_UNIVERSITY" ReturnType="Collection(TECAirlinesDBModel.GET_ALL_UNIVERSITY_Result)" />
+          <FunctionImport Name="GET_CLIENT_BYID" ReturnType="Collection(TECAirlinesDBModel.GET_CLIENT_BYID_Result)">
+          <Parameter Name="ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GET_CLIENT_CC" ReturnType="Collection(String)">
+          <Parameter Name="ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GET_CLIENT_INFO_BYID" ReturnType="Collection(TECAirlinesDBModel.GET_CLIENT_INFO_BYID_Result)">
+          <Parameter Name="ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GET_CLIENTE_INFO" ReturnType="Collection(TECAirlinesDBModel.GET_CLIENTE_INFO_Result)">
+          <Parameter Name="EMAIL" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GET_FLIGHT_BYOD" ReturnType="Collection(TECAirlinesDBModel.GET_FLIGHT_BYOD_Result)">
+            <Parameter Name="O" Mode="In" Type="String" />
+            <Parameter Name="D" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GET_FLIGHT_ID" ReturnType="Collection(Int32)" />
+          <FunctionImport Name="GET_NOT_STUDENT" ReturnType="Collection(TECAirlinesDBModel.GET_NOT_STUDENT_Result)" />
+          <FunctionImport Name="GET_PILOT_BYID" ReturnType="Collection(TECAirlinesDBModel.GET_PILOT_BYID_Result)">
+          <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GET_PLANE_INFO_BYID" ReturnType="Collection(TECAirlinesDBModel.GET_PLANE_INFO_BYID_Result)">
+          <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GET_PROMTIONS" ReturnType="Collection(TECAirlinesDBModel.GET_PROMTIONS_Result)" />
+          <FunctionImport Name="GET_REGULAR_FLIGHTS" ReturnType="Collection(TECAirlinesDBModel.GET_REGULAR_FLIGHTS_Result)" />
+          <FunctionImport Name="GET_STUDENT" ReturnType="Collection(TECAirlinesDBModel.GET_STUDENT_Result)" />
+          <FunctionImport Name="GET_UNIVERSITY_BYID" ReturnType="Collection(TECAirlinesDBModel.GET_UNIVERSITY_BYID_Result)">
+          <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="INSERT_AIRPLANE">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="PID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="INSERT_AIRPORT">
+            <Parameter Name="NAME" Mode="In" Type="String" />
+            <Parameter Name="ICODE" Mode="In" Type="String" />
+            <Parameter Name="SCODE" Mode="In" Type="String" />
+            <Parameter Name="CCODE" Mode="In" Type="String" />
+            <Parameter Name="COUNTRY" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="INSERT_CLIENT">
+            <Parameter Name="ID" Mode="In" Type="String" />
+            <Parameter Name="FN" Mode="In" Type="String" />
+            <Parameter Name="LN" Mode="In" Type="String" />
+            <Parameter Name="UID" Mode="In" Type="String" />
+            <Parameter Name="PN" Mode="In" Type="String" />
+            <Parameter Name="CN" Mode="In" Type="String" />
+            <Parameter Name="M" Mode="In" Type="Int32" />
+            <Parameter Name="EM" Mode="In" Type="String" />
+            <Parameter Name="PW" Mode="In" Type="String" />
+            <Parameter Name="UC" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="INSERT_FLIGHT">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="AID" Mode="In" Type="Int32" />
+            <Parameter Name="O" Mode="In" Type="String" />
+            <Parameter Name="D" Mode="In" Type="String" />
+            <Parameter Name="FS" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="INSERT_PILOT">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="FN" Mode="In" Type="String" />
+            <Parameter Name="LN" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="INSERT_RESERVATION">
+            <Parameter Name="TICKET_COUNT" Mode="In" Type="Int32" />
+            <Parameter Name="LUGGAGE_COUNT" Mode="In" Type="Int32" />
+            <Parameter Name="SEATS" Mode="In" Type="String" />
+            <Parameter Name="CHECKIN" Mode="In" Type="String" />
+            <Parameter Name="TTYPE" Mode="In" Type="String" />
+            <Parameter Name="PRICE" Mode="In" Type="Int32" />
+            <Parameter Name="CLIENT_ID" Mode="In" Type="String" />
+            <Parameter Name="FLIGHT_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="INSERT_ROUTE">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="ORI" Mode="In" Type="String" />
+            <Parameter Name="DES" Mode="In" Type="String" />
+            <Parameter Name="FM" Mode="In" Type="Int32" />
+            <Parameter Name="C" Mode="In" Type="Int32" />
+            <Parameter Name="ECP" Mode="In" Type="Int32" />
+            <Parameter Name="EJP" Mode="In" Type="Int32" />
+            <Parameter Name="DH" Mode="In" Type="DateTime" />
+            <Parameter Name="IP" Mode="In" Type="String" />
+            <Parameter Name="LC" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="INSERT_UNIVERSITY">
+          <Parameter Name="NAME" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SELECT_FLIGHT_ID" ReturnType="Collection(TECAirlinesDBModel.SELECT_FLIGHT_ID_Result)">
+          <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SELECT_RESERVATION" ReturnType="Collection(TECAirlinesDBModel.SELECT_RESERVATION_Result)" />
+          <FunctionImport Name="SELECT_RESERVATION_ID" ReturnType="Collection(TECAirlinesDBModel.SELECT_RESERVATION_ID_Result)">
+          <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SET_SEATS">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="SEATS" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="CHANGE_STATUS">
+          <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SELECT_RESERVATION_BYCID" ReturnType="Collection(TECAirlinesDBModel.SELECT_RESERVATION_BYCID_Result)">
+          <Parameter Name="ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GET_CLIENT_ID" ReturnType="Collection(String)">
+          <Parameter Name="EMAIL" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="EMAIL_CONFIRMATION_Result">
+          <Property Type="Int32" Name="RESERVATION_ID" Nullable="false" />
+          <Property Type="String" Name="CLIENT_ID" Nullable="false" MaxLength="9" />
+          <Property Type="Int32" Name="FLIGHT_ID" Nullable="false" />
+          <Property Type="String" Name="ORIGIN_AIRPORT" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="DESTINATION_AIRPORT" Nullable="true" MaxLength="3" />
+          <Property Type="DateTime" Name="DATE_HOUR" Nullable="false" Precision="23" />
+          <Property Type="String" Name="SEATS" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="PRICE" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GET_AIRPLANE_BYD_Result">
+          <Property Type="Int32" Name="AIRPLANE_ID" Nullable="false" />
+          <Property Type="Int32" Name="PILOT_ID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GET_AIRPORT_BYID_Result">
+          <Property Type="String" Name="AIRPORT_NAME" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="IATA_CODE" Nullable="false" MaxLength="3" />
+          <Property Type="String" Name="STATE_CODE" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="COUNTRY_CODE" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="COUNTRY_NAME" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GET_ALL_AIRPLANE_Result">
+          <Property Type="Int32" Name="AIRPLANE_ID" Nullable="false" />
+          <Property Type="Int32" Name="PILOT_ID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GET_ALL_AIRPORTS_Result">
+          <Property Type="String" Name="AIRPORT_NAME" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="IATA_CODE" Nullable="false" MaxLength="3" />
+          <Property Type="String" Name="STATE_CODE" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="COUNTRY_CODE" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="COUNTRY_NAME" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GET_ALL_CLIENT_Result">
+          <Property Type="String" Name="CLIENT_ID" Nullable="false" MaxLength="9" />
+          <Property Type="String" Name="CLIENT_FNAME" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CLIENT_LNAME" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CLIENT_UID" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="CLIENT_PHONENO" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="CLIENT_CARDNO" Nullable="false" MaxLength="16" />
+          <Property Type="Int32" Name="CLIENT_MILES" Nullable="true" />
+          <Property Type="String" Name="CLIENT_EMAIL" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CLIENT_PASSWRD" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="UNIVERSITY_ID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GET_ALL_PILOT_Result">
+          <Property Type="Int32" Name="PILOT_ID" Nullable="false" />
+          <Property Type="String" Name="PILOT_FNAME" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="PILOT_LNAME" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GET_ALL_UNIVERSITY_Result">
+          <Property Type="Int32" Name="UNIVERSITY_ID" Nullable="false" />
+          <Property Type="String" Name="UNIVERSITY_NAME" Nullable="false" MaxLength="60" />
+        </ComplexType>
+        <ComplexType Name="GET_CLIENT_BYID_Result">
+          <Property Type="String" Name="CLIENT_ID" Nullable="false" MaxLength="9" />
+          <Property Type="String" Name="CLIENT_FNAME" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CLIENT_LNAME" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CLIENT_UID" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="CLIENT_PHONENO" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="CLIENT_CARDNO" Nullable="false" MaxLength="16" />
+          <Property Type="Int32" Name="CLIENT_MILES" Nullable="true" />
+          <Property Type="String" Name="CLIENT_EMAIL" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CLIENT_PASSWRD" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="UNIVERSITY_ID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GET_CLIENT_INFO_BYID_Result">
+          <Property Type="String" Name="CLIENT_ID" Nullable="false" MaxLength="9" />
+          <Property Type="String" Name="CLIENT_FNAME" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CLIENT_LNAME" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CLIENT_UID" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="CLIENT_PHONENO" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="CLIENT_CARDNO" Nullable="false" MaxLength="16" />
+          <Property Type="Int32" Name="CLIENT_MILES" Nullable="true" />
+          <Property Type="String" Name="CLIENT_EMAIL" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CLIENT_PASSWRD" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="UNIVERSITY_NAME" Nullable="false" MaxLength="60" />
+        </ComplexType>
+        <ComplexType Name="GET_CLIENTE_INFO_Result">
+          <Property Type="String" Name="CLIENT_EMAIL" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CLIENT_PASSWRD" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GET_FLIGHT_BYOD_Result">
+          <Property Type="Int32" Name="FLIGHT_ID" Nullable="false" />
+          <Property Type="Int32" Name="PLANE_ID" Nullable="false" />
+          <Property Type="String" Name="ORIGIN_AIRPORT" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="DESTINATION_AIRPORT" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="FSTATUS" Nullable="false" MaxLength="15" />
+          <Property Type="Int32" Name="CAPACITY" Nullable="false" />
+          <Property Type="DateTime" Name="DATE_HOUR" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="FLIGHT_MILES" Nullable="false" />
+          <Property Type="String" Name="ORIGIN" Nullable="false" MaxLength="3" />
+          <Property Type="String" Name="DESTINATION" Nullable="false" MaxLength="3" />
+          <Property Type="Int32" Name="ECO_PRICE" Nullable="false" />
+          <Property Type="Int32" Name="EJE_PRICE" Nullable="false" />
+          <Property Type="Int32" Name="LUGGAGE_CAPACITY" Nullable="false" />
+          <Property Type="String" Name="IS_PROMOTION" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="GET_NOT_STUDENT_Result">
+          <Property Type="String" Name="CLIENT_ID" Nullable="false" MaxLength="9" />
+          <Property Type="String" Name="CLIENT_FNAME" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CLIENT_LNAME" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CLIENT_UID" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="CLIENT_PHONENO" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="CLIENT_CARDNO" Nullable="false" MaxLength="16" />
+          <Property Type="Int32" Name="CLIENT_MILES" Nullable="true" />
+          <Property Type="String" Name="CLIENT_EMAIL" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CLIENT_PASSWRD" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="UNIVERSITY_ID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GET_PILOT_BYID_Result">
+          <Property Type="Int32" Name="PILOT_ID" Nullable="false" />
+          <Property Type="String" Name="PILOT_FNAME" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="PILOT_LNAME" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GET_PLANE_INFO_BYID_Result">
+          <Property Type="Int32" Name="AIRPLANE_ID" Nullable="false" />
+          <Property Type="Int32" Name="PILOT_ID" Nullable="false" />
+          <Property Type="String" Name="PILOT_FNAME" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="PILOT_LNAME" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GET_PROMTIONS_Result">
+          <Property Type="Int32" Name="FLIGHT_ID" Nullable="false" />
+          <Property Type="Int32" Name="PLANE_ID" Nullable="false" />
+          <Property Type="String" Name="ORIGIN_AIRPORT" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="DESTINATION_AIRPORT" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="FSTATUS" Nullable="false" MaxLength="15" />
+          <Property Type="Int32" Name="CAPACITY" Nullable="false" />
+          <Property Type="DateTime" Name="DATE_HOUR" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="FLIGHT_MILES" Nullable="false" />
+          <Property Type="String" Name="ORIGIN" Nullable="false" MaxLength="3" />
+          <Property Type="String" Name="DESTINATION" Nullable="false" MaxLength="3" />
+          <Property Type="Int32" Name="ECO_PRICE" Nullable="false" />
+          <Property Type="Int32" Name="EJE_PRICE" Nullable="false" />
+          <Property Type="Int32" Name="LUGGAGE_CAPACITY" Nullable="false" />
+          <Property Type="String" Name="IS_PROMOTION" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="GET_REGULAR_FLIGHTS_Result">
+          <Property Type="Int32" Name="FLIGHT_ID" Nullable="false" />
+          <Property Type="Int32" Name="PLANE_ID" Nullable="false" />
+          <Property Type="String" Name="ORIGIN_AIRPORT" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="DESTINATION_AIRPORT" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="FSTATUS" Nullable="false" MaxLength="15" />
+          <Property Type="Int32" Name="CAPACITY" Nullable="false" />
+          <Property Type="DateTime" Name="DATE_HOUR" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="FLIGHT_MILES" Nullable="false" />
+          <Property Type="String" Name="ORIGIN" Nullable="false" MaxLength="3" />
+          <Property Type="String" Name="DESTINATION" Nullable="false" MaxLength="3" />
+          <Property Type="Int32" Name="ECO_PRICE" Nullable="false" />
+          <Property Type="Int32" Name="EJE_PRICE" Nullable="false" />
+          <Property Type="Int32" Name="LUGGAGE_CAPACITY" Nullable="false" />
+          <Property Type="String" Name="IS_PROMOTION" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="GET_STUDENT_Result">
+          <Property Type="String" Name="CLIENT_ID" Nullable="false" MaxLength="9" />
+          <Property Type="String" Name="CLIENT_FNAME" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CLIENT_LNAME" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CLIENT_UID" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="CLIENT_PHONENO" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="CLIENT_CARDNO" Nullable="false" MaxLength="16" />
+          <Property Type="Int32" Name="CLIENT_MILES" Nullable="true" />
+          <Property Type="String" Name="CLIENT_EMAIL" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CLIENT_PASSWRD" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="UNIVERSITY_ID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GET_UNIVERSITY_BYID_Result">
+          <Property Type="Int32" Name="UNIVERSITY_ID" Nullable="false" />
+          <Property Type="String" Name="UNIVERSITY_NAME" Nullable="false" MaxLength="60" />
+        </ComplexType>
+        <ComplexType Name="SELECT_FLIGHT_ID_Result">
+          <Property Type="Int32" Name="FLIGHT_ID" Nullable="false" />
+          <Property Type="Int32" Name="PLANE_ID" Nullable="false" />
+          <Property Type="String" Name="ORIGIN_AIRPORT" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="DESTINATION_AIRPORT" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="FSTATUS" Nullable="false" MaxLength="15" />
+          <Property Type="Int32" Name="CAPACITY" Nullable="false" />
+          <Property Type="DateTime" Name="DATE_HOUR" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="FLIGHT_MILES" Nullable="false" />
+          <Property Type="String" Name="ORIGIN" Nullable="false" MaxLength="3" />
+          <Property Type="String" Name="DESTINATION" Nullable="false" MaxLength="3" />
+          <Property Type="Int32" Name="ECO_PRICE" Nullable="false" />
+          <Property Type="Int32" Name="EJE_PRICE" Nullable="false" />
+          <Property Type="Int32" Name="LUGGAGE_CAPACITY" Nullable="false" />
+          <Property Type="String" Name="IS_PROMOTION" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="SELECT_RESERVATION_Result">
+          <Property Type="Int32" Name="RESERVATION_ID" Nullable="false" />
+          <Property Type="Int32" Name="TICKET_COUNT" Nullable="false" />
+          <Property Type="Int32" Name="LUGGAGE_COUNT" Nullable="false" />
+          <Property Type="String" Name="SEATS" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CHECKIN" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="T_TYPE" Nullable="false" MaxLength="15" />
+          <Property Type="Int32" Name="PRICE" Nullable="false" />
+          <Property Type="String" Name="CLIENT_ID" Nullable="false" MaxLength="9" />
+          <Property Type="Int32" Name="FLIGHT_ID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SELECT_RESERVATION_ID_Result">
+          <Property Type="Int32" Name="RESERVATION_ID" Nullable="false" />
+          <Property Type="Int32" Name="TICKET_COUNT" Nullable="false" />
+          <Property Type="Int32" Name="LUGGAGE_COUNT" Nullable="false" />
+          <Property Type="String" Name="SEATS" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CHECKIN" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="T_TYPE" Nullable="false" MaxLength="15" />
+          <Property Type="Int32" Name="PRICE" Nullable="false" />
+          <Property Type="String" Name="CLIENT_ID" Nullable="false" MaxLength="9" />
+          <Property Type="Int32" Name="FLIGHT_ID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SELECT_RESERVATION_BYCID_Result">
+          <Property Type="Int32" Name="RESERVATION_ID" Nullable="false" />
+          <Property Type="Int32" Name="TICKET_COUNT" Nullable="false" />
+          <Property Type="Int32" Name="LUGGAGE_COUNT" Nullable="false" />
+          <Property Type="String" Name="SEATS" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CHECKIN" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="T_TYPE" Nullable="false" MaxLength="15" />
+          <Property Type="Int32" Name="PRICE" Nullable="false" />
+          <Property Type="String" Name="CLIENT_ID" Nullable="false" MaxLength="9" />
+          <Property Type="Int32" Name="FLIGHT_ID" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TECAirlinesDBModelStoreContainer" CdmEntityContainer="TECAirlinesDBEntities">
+          <EntitySetMapping Name="AIRPLANEs">
+            <EntityTypeMapping TypeName="TECAirlinesDBModel.AIRPLANE">
+              <MappingFragment StoreEntitySet="AIRPLANE">
+                <ScalarProperty Name="AIRPLANE_ID" ColumnName="AIRPLANE_ID" />
+                <ScalarProperty Name="PILOT_ID" ColumnName="PILOT_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AIRPORTs">
+            <EntityTypeMapping TypeName="TECAirlinesDBModel.AIRPORT">
+              <MappingFragment StoreEntitySet="AIRPORT">
+                <ScalarProperty Name="AIRPORT_NAME" ColumnName="AIRPORT_NAME" />
+                <ScalarProperty Name="IATA_CODE" ColumnName="IATA_CODE" />
+                <ScalarProperty Name="STATE_CODE" ColumnName="STATE_CODE" />
+                <ScalarProperty Name="COUNTRY_CODE" ColumnName="COUNTRY_CODE" />
+                <ScalarProperty Name="COUNTRY_NAME" ColumnName="COUNTRY_NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CLIENTs">
+            <EntityTypeMapping TypeName="TECAirlinesDBModel.CLIENT">
+              <MappingFragment StoreEntitySet="CLIENT">
+                <ScalarProperty Name="CLIENT_ID" ColumnName="CLIENT_ID" />
+                <ScalarProperty Name="CLIENT_FNAME" ColumnName="CLIENT_FNAME" />
+                <ScalarProperty Name="CLIENT_LNAME" ColumnName="CLIENT_LNAME" />
+                <ScalarProperty Name="CLIENT_UID" ColumnName="CLIENT_UID" />
+                <ScalarProperty Name="CLIENT_PHONENO" ColumnName="CLIENT_PHONENO" />
+                <ScalarProperty Name="CLIENT_CARDNO" ColumnName="CLIENT_CARDNO" />
+                <ScalarProperty Name="CLIENT_MILES" ColumnName="CLIENT_MILES" />
+                <ScalarProperty Name="CLIENT_EMAIL" ColumnName="CLIENT_EMAIL" />
+                <ScalarProperty Name="CLIENT_PASSWRD" ColumnName="CLIENT_PASSWRD" />
+                <ScalarProperty Name="UNIVERSITY_ID" ColumnName="UNIVERSITY_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FLIGHTs">
+            <EntityTypeMapping TypeName="TECAirlinesDBModel.FLIGHT">
+              <MappingFragment StoreEntitySet="FLIGHT">
+                <ScalarProperty Name="FLIGHT_ID" ColumnName="FLIGHT_ID" />
+                <ScalarProperty Name="PLANE_ID" ColumnName="PLANE_ID" />
+                <ScalarProperty Name="ORIGIN_AIRPORT" ColumnName="ORIGIN_AIRPORT" />
+                <ScalarProperty Name="DESTINATION_AIRPORT" ColumnName="DESTINATION_AIRPORT" />
+                <ScalarProperty Name="FSTATUS" ColumnName="FSTATUS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PILOTs">
+            <EntityTypeMapping TypeName="TECAirlinesDBModel.PILOT">
+              <MappingFragment StoreEntitySet="PILOT">
+                <ScalarProperty Name="PILOT_ID" ColumnName="PILOT_ID" />
+                <ScalarProperty Name="PILOT_FNAME" ColumnName="PILOT_FNAME" />
+                <ScalarProperty Name="PILOT_LNAME" ColumnName="PILOT_LNAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RESERVATIONs">
+            <EntityTypeMapping TypeName="TECAirlinesDBModel.RESERVATION">
+              <MappingFragment StoreEntitySet="RESERVATION">
+                <ScalarProperty Name="RESERVATION_ID" ColumnName="RESERVATION_ID" />
+                <ScalarProperty Name="TICKET_COUNT" ColumnName="TICKET_COUNT" />
+                <ScalarProperty Name="LUGGAGE_COUNT" ColumnName="LUGGAGE_COUNT" />
+                <ScalarProperty Name="SEATS" ColumnName="SEATS" />
+                <ScalarProperty Name="CHECKIN" ColumnName="CHECKIN" />
+                <ScalarProperty Name="T_TYPE" ColumnName="T_TYPE" />
+                <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+                <ScalarProperty Name="CLIENT_ID" ColumnName="CLIENT_ID" />
+                <ScalarProperty Name="FLIGHT_ID" ColumnName="FLIGHT_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UNIVERSITies">
+            <EntityTypeMapping TypeName="TECAirlinesDBModel.UNIVERSITY">
+              <MappingFragment StoreEntitySet="UNIVERSITY">
+                <ScalarProperty Name="UNIVERSITY_ID" ColumnName="UNIVERSITY_ID" />
+                <ScalarProperty Name="UNIVERSITY_NAME" ColumnName="UNIVERSITY_NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FROUTEs">
+            <EntityTypeMapping TypeName="TECAirlinesDBModel.FROUTE">
+              <MappingFragment StoreEntitySet="FROUTE">
+                <ScalarProperty Name="FLIGHT_ID" ColumnName="FLIGHT_ID" />
+                <ScalarProperty Name="ORIGIN" ColumnName="ORIGIN" />
+                <ScalarProperty Name="DESTINATION" ColumnName="DESTINATION" />
+                <ScalarProperty Name="FLIGHT_MILES" ColumnName="FLIGHT_MILES" />
+                <ScalarProperty Name="CAPACITY" ColumnName="CAPACITY" />
+                <ScalarProperty Name="ECO_PRICE" ColumnName="ECO_PRICE" />
+                <ScalarProperty Name="EJE_PRICE" ColumnName="EJE_PRICE" />
+                <ScalarProperty Name="DATE_HOUR" ColumnName="DATE_HOUR" />
+                <ScalarProperty Name="IS_PROMOTION" ColumnName="IS_PROMOTION" />
+                <ScalarProperty Name="LUGGAGE_CAPACITY" ColumnName="LUGGAGE_CAPACITY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ALL_FLIGHT">
+            <EntityTypeMapping TypeName="TECAirlinesDBModel.ALL_FLIGHT">
+              <MappingFragment StoreEntitySet="ALL_FLIGHT">
+                <ScalarProperty Name="FLIGHT_ID" ColumnName="FLIGHT_ID" />
+                <ScalarProperty Name="PLANE_ID" ColumnName="PLANE_ID" />
+                <ScalarProperty Name="ORIGIN_AIRPORT" ColumnName="ORIGIN_AIRPORT" />
+                <ScalarProperty Name="DESTINATION_AIRPORT" ColumnName="DESTINATION_AIRPORT" />
+                <ScalarProperty Name="FSTATUS" ColumnName="FSTATUS" />
+                <ScalarProperty Name="CAPACITY" ColumnName="CAPACITY" />
+                <ScalarProperty Name="DATE_HOUR" ColumnName="DATE_HOUR" />
+                <ScalarProperty Name="FLIGHT_MILES" ColumnName="FLIGHT_MILES" />
+                <ScalarProperty Name="ORIGIN" ColumnName="ORIGIN" />
+                <ScalarProperty Name="DESTINATION" ColumnName="DESTINATION" />
+                <ScalarProperty Name="ECO_PRICE" ColumnName="ECO_PRICE" />
+                <ScalarProperty Name="EJE_PRICE" ColumnName="EJE_PRICE" />
+                <ScalarProperty Name="LUGGAGE_CAPACITY" ColumnName="LUGGAGE_CAPACITY" />
+                <ScalarProperty Name="IS_PROMOTION" ColumnName="IS_PROMOTION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CLIENT_INFO">
+            <EntityTypeMapping TypeName="TECAirlinesDBModel.CLIENT_INFO">
+              <MappingFragment StoreEntitySet="CLIENT_INFO">
+                <ScalarProperty Name="CLIENT_ID" ColumnName="CLIENT_ID" />
+                <ScalarProperty Name="CLIENT_FNAME" ColumnName="CLIENT_FNAME" />
+                <ScalarProperty Name="CLIENT_LNAME" ColumnName="CLIENT_LNAME" />
+                <ScalarProperty Name="CLIENT_UID" ColumnName="CLIENT_UID" />
+                <ScalarProperty Name="CLIENT_PHONENO" ColumnName="CLIENT_PHONENO" />
+                <ScalarProperty Name="CLIENT_CARDNO" ColumnName="CLIENT_CARDNO" />
+                <ScalarProperty Name="CLIENT_MILES" ColumnName="CLIENT_MILES" />
+                <ScalarProperty Name="CLIENT_EMAIL" ColumnName="CLIENT_EMAIL" />
+                <ScalarProperty Name="CLIENT_PASSWRD" ColumnName="CLIENT_PASSWRD" />
+                <ScalarProperty Name="UNIVERSITY_NAME" ColumnName="UNIVERSITY_NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PLANE_INFO">
+            <EntityTypeMapping TypeName="TECAirlinesDBModel.PLANE_INFO">
+              <MappingFragment StoreEntitySet="PLANE_INFO">
+                <ScalarProperty Name="AIRPLANE_ID" ColumnName="AIRPLANE_ID" />
+                <ScalarProperty Name="PILOT_ID" ColumnName="PILOT_ID" />
+                <ScalarProperty Name="PILOT_FNAME" ColumnName="PILOT_FNAME" />
+                <ScalarProperty Name="PILOT_LNAME" ColumnName="PILOT_LNAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ADD_MILES" FunctionName="TECAirlinesDBModel.Store.ADD_MILES" />
+          <FunctionImportMapping FunctionImportName="CHECKIN" FunctionName="TECAirlinesDBModel.Store.CHECKIN" />
+          <FunctionImportMapping FunctionImportName="DELETE_ROUTE" FunctionName="TECAirlinesDBModel.Store.DELETE_ROUTE" />
+          <FunctionImportMapping FunctionImportName="EMAIL_CONFIRMATION" FunctionName="TECAirlinesDBModel.Store.EMAIL_CONFIRMATION">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TECAirlinesDBModel.EMAIL_CONFIRMATION_Result">
+                <ScalarProperty Name="RESERVATION_ID" ColumnName="RESERVATION_ID" />
+                <ScalarProperty Name="CLIENT_ID" ColumnName="CLIENT_ID" />
+                <ScalarProperty Name="FLIGHT_ID" ColumnName="FLIGHT_ID" />
+                <ScalarProperty Name="ORIGIN_AIRPORT" ColumnName="ORIGIN_AIRPORT" />
+                <ScalarProperty Name="DESTINATION_AIRPORT" ColumnName="DESTINATION_AIRPORT" />
+                <ScalarProperty Name="DATE_HOUR" ColumnName="DATE_HOUR" />
+                <ScalarProperty Name="SEATS" ColumnName="SEATS" />
+                <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GET_AIRPLANE_BYD" FunctionName="TECAirlinesDBModel.Store.GET_AIRPLANE_BYD">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TECAirlinesDBModel.GET_AIRPLANE_BYD_Result">
+                <ScalarProperty Name="AIRPLANE_ID" ColumnName="AIRPLANE_ID" />
+                <ScalarProperty Name="PILOT_ID" ColumnName="PILOT_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GET_AIRPORT_BYID" FunctionName="TECAirlinesDBModel.Store.GET_AIRPORT_BYID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TECAirlinesDBModel.GET_AIRPORT_BYID_Result">
+                <ScalarProperty Name="AIRPORT_NAME" ColumnName="AIRPORT_NAME" />
+                <ScalarProperty Name="IATA_CODE" ColumnName="IATA_CODE" />
+                <ScalarProperty Name="STATE_CODE" ColumnName="STATE_CODE" />
+                <ScalarProperty Name="COUNTRY_CODE" ColumnName="COUNTRY_CODE" />
+                <ScalarProperty Name="COUNTRY_NAME" ColumnName="COUNTRY_NAME" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GET_ALL_AIRPLANE" FunctionName="TECAirlinesDBModel.Store.GET_ALL_AIRPLANE">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TECAirlinesDBModel.GET_ALL_AIRPLANE_Result">
+                <ScalarProperty Name="AIRPLANE_ID" ColumnName="AIRPLANE_ID" />
+                <ScalarProperty Name="PILOT_ID" ColumnName="PILOT_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GET_ALL_AIRPORTS" FunctionName="TECAirlinesDBModel.Store.GET_ALL_AIRPORTS">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TECAirlinesDBModel.GET_ALL_AIRPORTS_Result">
+                <ScalarProperty Name="AIRPORT_NAME" ColumnName="AIRPORT_NAME" />
+                <ScalarProperty Name="IATA_CODE" ColumnName="IATA_CODE" />
+                <ScalarProperty Name="STATE_CODE" ColumnName="STATE_CODE" />
+                <ScalarProperty Name="COUNTRY_CODE" ColumnName="COUNTRY_CODE" />
+                <ScalarProperty Name="COUNTRY_NAME" ColumnName="COUNTRY_NAME" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GET_ALL_CLIENT" FunctionName="TECAirlinesDBModel.Store.GET_ALL_CLIENT">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TECAirlinesDBModel.GET_ALL_CLIENT_Result">
+                <ScalarProperty Name="CLIENT_ID" ColumnName="CLIENT_ID" />
+                <ScalarProperty Name="CLIENT_FNAME" ColumnName="CLIENT_FNAME" />
+                <ScalarProperty Name="CLIENT_LNAME" ColumnName="CLIENT_LNAME" />
+                <ScalarProperty Name="CLIENT_UID" ColumnName="CLIENT_UID" />
+                <ScalarProperty Name="CLIENT_PHONENO" ColumnName="CLIENT_PHONENO" />
+                <ScalarProperty Name="CLIENT_CARDNO" ColumnName="CLIENT_CARDNO" />
+                <ScalarProperty Name="CLIENT_MILES" ColumnName="CLIENT_MILES" />
+                <ScalarProperty Name="CLIENT_EMAIL" ColumnName="CLIENT_EMAIL" />
+                <ScalarProperty Name="CLIENT_PASSWRD" ColumnName="CLIENT_PASSWRD" />
+                <ScalarProperty Name="UNIVERSITY_ID" ColumnName="UNIVERSITY_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GET_ALL_PILOT" FunctionName="TECAirlinesDBModel.Store.GET_ALL_PILOT">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TECAirlinesDBModel.GET_ALL_PILOT_Result">
+                <ScalarProperty Name="PILOT_ID" ColumnName="PILOT_ID" />
+                <ScalarProperty Name="PILOT_FNAME" ColumnName="PILOT_FNAME" />
+                <ScalarProperty Name="PILOT_LNAME" ColumnName="PILOT_LNAME" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GET_ALL_UNIVERSITY" FunctionName="TECAirlinesDBModel.Store.GET_ALL_UNIVERSITY">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TECAirlinesDBModel.GET_ALL_UNIVERSITY_Result">
+                <ScalarProperty Name="UNIVERSITY_ID" ColumnName="UNIVERSITY_ID" />
+                <ScalarProperty Name="UNIVERSITY_NAME" ColumnName="UNIVERSITY_NAME" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GET_CLIENT_BYID" FunctionName="TECAirlinesDBModel.Store.GET_CLIENT_BYID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TECAirlinesDBModel.GET_CLIENT_BYID_Result">
+                <ScalarProperty Name="CLIENT_ID" ColumnName="CLIENT_ID" />
+                <ScalarProperty Name="CLIENT_FNAME" ColumnName="CLIENT_FNAME" />
+                <ScalarProperty Name="CLIENT_LNAME" ColumnName="CLIENT_LNAME" />
+                <ScalarProperty Name="CLIENT_UID" ColumnName="CLIENT_UID" />
+                <ScalarProperty Name="CLIENT_PHONENO" ColumnName="CLIENT_PHONENO" />
+                <ScalarProperty Name="CLIENT_CARDNO" ColumnName="CLIENT_CARDNO" />
+                <ScalarProperty Name="CLIENT_MILES" ColumnName="CLIENT_MILES" />
+                <ScalarProperty Name="CLIENT_EMAIL" ColumnName="CLIENT_EMAIL" />
+                <ScalarProperty Name="CLIENT_PASSWRD" ColumnName="CLIENT_PASSWRD" />
+                <ScalarProperty Name="UNIVERSITY_ID" ColumnName="UNIVERSITY_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GET_CLIENT_CC" FunctionName="TECAirlinesDBModel.Store.GET_CLIENT_CC" />
+          <FunctionImportMapping FunctionImportName="GET_CLIENT_INFO_BYID" FunctionName="TECAirlinesDBModel.Store.GET_CLIENT_INFO_BYID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TECAirlinesDBModel.GET_CLIENT_INFO_BYID_Result">
+                <ScalarProperty Name="CLIENT_ID" ColumnName="CLIENT_ID" />
+                <ScalarProperty Name="CLIENT_FNAME" ColumnName="CLIENT_FNAME" />
+                <ScalarProperty Name="CLIENT_LNAME" ColumnName="CLIENT_LNAME" />
+                <ScalarProperty Name="CLIENT_UID" ColumnName="CLIENT_UID" />
+                <ScalarProperty Name="CLIENT_PHONENO" ColumnName="CLIENT_PHONENO" />
+                <ScalarProperty Name="CLIENT_CARDNO" ColumnName="CLIENT_CARDNO" />
+                <ScalarProperty Name="CLIENT_MILES" ColumnName="CLIENT_MILES" />
+                <ScalarProperty Name="CLIENT_EMAIL" ColumnName="CLIENT_EMAIL" />
+                <ScalarProperty Name="CLIENT_PASSWRD" ColumnName="CLIENT_PASSWRD" />
+                <ScalarProperty Name="UNIVERSITY_NAME" ColumnName="UNIVERSITY_NAME" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GET_CLIENTE_INFO" FunctionName="TECAirlinesDBModel.Store.GET_CLIENTE_INFO">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TECAirlinesDBModel.GET_CLIENTE_INFO_Result">
+                <ScalarProperty Name="CLIENT_EMAIL" ColumnName="CLIENT_EMAIL" />
+                <ScalarProperty Name="CLIENT_PASSWRD" ColumnName="CLIENT_PASSWRD" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GET_FLIGHT_BYOD" FunctionName="TECAirlinesDBModel.Store.GET_FLIGHT_BYOD">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TECAirlinesDBModel.GET_FLIGHT_BYOD_Result">
+                <ScalarProperty Name="FLIGHT_ID" ColumnName="FLIGHT_ID" />
+                <ScalarProperty Name="PLANE_ID" ColumnName="PLANE_ID" />
+                <ScalarProperty Name="ORIGIN_AIRPORT" ColumnName="ORIGIN_AIRPORT" />
+                <ScalarProperty Name="DESTINATION_AIRPORT" ColumnName="DESTINATION_AIRPORT" />
+                <ScalarProperty Name="FSTATUS" ColumnName="FSTATUS" />
+                <ScalarProperty Name="CAPACITY" ColumnName="CAPACITY" />
+                <ScalarProperty Name="DATE_HOUR" ColumnName="DATE_HOUR" />
+                <ScalarProperty Name="FLIGHT_MILES" ColumnName="FLIGHT_MILES" />
+                <ScalarProperty Name="ORIGIN" ColumnName="ORIGIN" />
+                <ScalarProperty Name="DESTINATION" ColumnName="DESTINATION" />
+                <ScalarProperty Name="ECO_PRICE" ColumnName="ECO_PRICE" />
+                <ScalarProperty Name="EJE_PRICE" ColumnName="EJE_PRICE" />
+                <ScalarProperty Name="LUGGAGE_CAPACITY" ColumnName="LUGGAGE_CAPACITY" />
+                <ScalarProperty Name="IS_PROMOTION" ColumnName="IS_PROMOTION" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GET_FLIGHT_ID" FunctionName="TECAirlinesDBModel.Store.GET_FLIGHT_ID" />
+          <FunctionImportMapping FunctionImportName="GET_NOT_STUDENT" FunctionName="TECAirlinesDBModel.Store.GET_NOT_STUDENT">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TECAirlinesDBModel.GET_NOT_STUDENT_Result">
+                <ScalarProperty Name="CLIENT_ID" ColumnName="CLIENT_ID" />
+                <ScalarProperty Name="CLIENT_FNAME" ColumnName="CLIENT_FNAME" />
+                <ScalarProperty Name="CLIENT_LNAME" ColumnName="CLIENT_LNAME" />
+                <ScalarProperty Name="CLIENT_UID" ColumnName="CLIENT_UID" />
+                <ScalarProperty Name="CLIENT_PHONENO" ColumnName="CLIENT_PHONENO" />
+                <ScalarProperty Name="CLIENT_CARDNO" ColumnName="CLIENT_CARDNO" />
+                <ScalarProperty Name="CLIENT_MILES" ColumnName="CLIENT_MILES" />
+                <ScalarProperty Name="CLIENT_EMAIL" ColumnName="CLIENT_EMAIL" />
+                <ScalarProperty Name="CLIENT_PASSWRD" ColumnName="CLIENT_PASSWRD" />
+                <ScalarProperty Name="UNIVERSITY_ID" ColumnName="UNIVERSITY_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GET_PILOT_BYID" FunctionName="TECAirlinesDBModel.Store.GET_PILOT_BYID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TECAirlinesDBModel.GET_PILOT_BYID_Result">
+                <ScalarProperty Name="PILOT_ID" ColumnName="PILOT_ID" />
+                <ScalarProperty Name="PILOT_FNAME" ColumnName="PILOT_FNAME" />
+                <ScalarProperty Name="PILOT_LNAME" ColumnName="PILOT_LNAME" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GET_PLANE_INFO_BYID" FunctionName="TECAirlinesDBModel.Store.GET_PLANE_INFO_BYID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TECAirlinesDBModel.GET_PLANE_INFO_BYID_Result">
+                <ScalarProperty Name="AIRPLANE_ID" ColumnName="AIRPLANE_ID" />
+                <ScalarProperty Name="PILOT_ID" ColumnName="PILOT_ID" />
+                <ScalarProperty Name="PILOT_FNAME" ColumnName="PILOT_FNAME" />
+                <ScalarProperty Name="PILOT_LNAME" ColumnName="PILOT_LNAME" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GET_PROMTIONS" FunctionName="TECAirlinesDBModel.Store.GET_PROMTIONS">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TECAirlinesDBModel.GET_PROMTIONS_Result">
+                <ScalarProperty Name="FLIGHT_ID" ColumnName="FLIGHT_ID" />
+                <ScalarProperty Name="PLANE_ID" ColumnName="PLANE_ID" />
+                <ScalarProperty Name="ORIGIN_AIRPORT" ColumnName="ORIGIN_AIRPORT" />
+                <ScalarProperty Name="DESTINATION_AIRPORT" ColumnName="DESTINATION_AIRPORT" />
+                <ScalarProperty Name="FSTATUS" ColumnName="FSTATUS" />
+                <ScalarProperty Name="CAPACITY" ColumnName="CAPACITY" />
+                <ScalarProperty Name="DATE_HOUR" ColumnName="DATE_HOUR" />
+                <ScalarProperty Name="FLIGHT_MILES" ColumnName="FLIGHT_MILES" />
+                <ScalarProperty Name="ORIGIN" ColumnName="ORIGIN" />
+                <ScalarProperty Name="DESTINATION" ColumnName="DESTINATION" />
+                <ScalarProperty Name="ECO_PRICE" ColumnName="ECO_PRICE" />
+                <ScalarProperty Name="EJE_PRICE" ColumnName="EJE_PRICE" />
+                <ScalarProperty Name="LUGGAGE_CAPACITY" ColumnName="LUGGAGE_CAPACITY" />
+                <ScalarProperty Name="IS_PROMOTION" ColumnName="IS_PROMOTION" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GET_REGULAR_FLIGHTS" FunctionName="TECAirlinesDBModel.Store.GET_REGULAR_FLIGHTS">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TECAirlinesDBModel.GET_REGULAR_FLIGHTS_Result">
+                <ScalarProperty Name="FLIGHT_ID" ColumnName="FLIGHT_ID" />
+                <ScalarProperty Name="PLANE_ID" ColumnName="PLANE_ID" />
+                <ScalarProperty Name="ORIGIN_AIRPORT" ColumnName="ORIGIN_AIRPORT" />
+                <ScalarProperty Name="DESTINATION_AIRPORT" ColumnName="DESTINATION_AIRPORT" />
+                <ScalarProperty Name="FSTATUS" ColumnName="FSTATUS" />
+                <ScalarProperty Name="CAPACITY" ColumnName="CAPACITY" />
+                <ScalarProperty Name="DATE_HOUR" ColumnName="DATE_HOUR" />
+                <ScalarProperty Name="FLIGHT_MILES" ColumnName="FLIGHT_MILES" />
+                <ScalarProperty Name="ORIGIN" ColumnName="ORIGIN" />
+                <ScalarProperty Name="DESTINATION" ColumnName="DESTINATION" />
+                <ScalarProperty Name="ECO_PRICE" ColumnName="ECO_PRICE" />
+                <ScalarProperty Name="EJE_PRICE" ColumnName="EJE_PRICE" />
+                <ScalarProperty Name="LUGGAGE_CAPACITY" ColumnName="LUGGAGE_CAPACITY" />
+                <ScalarProperty Name="IS_PROMOTION" ColumnName="IS_PROMOTION" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GET_STUDENT" FunctionName="TECAirlinesDBModel.Store.GET_STUDENT">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TECAirlinesDBModel.GET_STUDENT_Result">
+                <ScalarProperty Name="CLIENT_ID" ColumnName="CLIENT_ID" />
+                <ScalarProperty Name="CLIENT_FNAME" ColumnName="CLIENT_FNAME" />
+                <ScalarProperty Name="CLIENT_LNAME" ColumnName="CLIENT_LNAME" />
+                <ScalarProperty Name="CLIENT_UID" ColumnName="CLIENT_UID" />
+                <ScalarProperty Name="CLIENT_PHONENO" ColumnName="CLIENT_PHONENO" />
+                <ScalarProperty Name="CLIENT_CARDNO" ColumnName="CLIENT_CARDNO" />
+                <ScalarProperty Name="CLIENT_MILES" ColumnName="CLIENT_MILES" />
+                <ScalarProperty Name="CLIENT_EMAIL" ColumnName="CLIENT_EMAIL" />
+                <ScalarProperty Name="CLIENT_PASSWRD" ColumnName="CLIENT_PASSWRD" />
+                <ScalarProperty Name="UNIVERSITY_ID" ColumnName="UNIVERSITY_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GET_UNIVERSITY_BYID" FunctionName="TECAirlinesDBModel.Store.GET_UNIVERSITY_BYID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TECAirlinesDBModel.GET_UNIVERSITY_BYID_Result">
+                <ScalarProperty Name="UNIVERSITY_ID" ColumnName="UNIVERSITY_ID" />
+                <ScalarProperty Name="UNIVERSITY_NAME" ColumnName="UNIVERSITY_NAME" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="INSERT_AIRPLANE" FunctionName="TECAirlinesDBModel.Store.INSERT_AIRPLANE" />
+          <FunctionImportMapping FunctionImportName="INSERT_AIRPORT" FunctionName="TECAirlinesDBModel.Store.INSERT_AIRPORT" />
+          <FunctionImportMapping FunctionImportName="INSERT_CLIENT" FunctionName="TECAirlinesDBModel.Store.INSERT_CLIENT" />
+          <FunctionImportMapping FunctionImportName="INSERT_FLIGHT" FunctionName="TECAirlinesDBModel.Store.INSERT_FLIGHT" />
+          <FunctionImportMapping FunctionImportName="INSERT_PILOT" FunctionName="TECAirlinesDBModel.Store.INSERT_PILOT" />
+          <FunctionImportMapping FunctionImportName="INSERT_RESERVATION" FunctionName="TECAirlinesDBModel.Store.INSERT_RESERVATION" />
+          <FunctionImportMapping FunctionImportName="INSERT_ROUTE" FunctionName="TECAirlinesDBModel.Store.INSERT_ROUTE" />
+          <FunctionImportMapping FunctionImportName="INSERT_UNIVERSITY" FunctionName="TECAirlinesDBModel.Store.INSERT_UNIVERSITY" />
+          <FunctionImportMapping FunctionImportName="SELECT_FLIGHT_ID" FunctionName="TECAirlinesDBModel.Store.SELECT_FLIGHT_ID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TECAirlinesDBModel.SELECT_FLIGHT_ID_Result">
+                <ScalarProperty Name="FLIGHT_ID" ColumnName="FLIGHT_ID" />
+                <ScalarProperty Name="PLANE_ID" ColumnName="PLANE_ID" />
+                <ScalarProperty Name="ORIGIN_AIRPORT" ColumnName="ORIGIN_AIRPORT" />
+                <ScalarProperty Name="DESTINATION_AIRPORT" ColumnName="DESTINATION_AIRPORT" />
+                <ScalarProperty Name="FSTATUS" ColumnName="FSTATUS" />
+                <ScalarProperty Name="CAPACITY" ColumnName="CAPACITY" />
+                <ScalarProperty Name="DATE_HOUR" ColumnName="DATE_HOUR" />
+                <ScalarProperty Name="FLIGHT_MILES" ColumnName="FLIGHT_MILES" />
+                <ScalarProperty Name="ORIGIN" ColumnName="ORIGIN" />
+                <ScalarProperty Name="DESTINATION" ColumnName="DESTINATION" />
+                <ScalarProperty Name="ECO_PRICE" ColumnName="ECO_PRICE" />
+                <ScalarProperty Name="EJE_PRICE" ColumnName="EJE_PRICE" />
+                <ScalarProperty Name="LUGGAGE_CAPACITY" ColumnName="LUGGAGE_CAPACITY" />
+                <ScalarProperty Name="IS_PROMOTION" ColumnName="IS_PROMOTION" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SELECT_RESERVATION" FunctionName="TECAirlinesDBModel.Store.SELECT_RESERVATION">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TECAirlinesDBModel.SELECT_RESERVATION_Result">
+                <ScalarProperty Name="RESERVATION_ID" ColumnName="RESERVATION_ID" />
+                <ScalarProperty Name="TICKET_COUNT" ColumnName="TICKET_COUNT" />
+                <ScalarProperty Name="LUGGAGE_COUNT" ColumnName="LUGGAGE_COUNT" />
+                <ScalarProperty Name="SEATS" ColumnName="SEATS" />
+                <ScalarProperty Name="CHECKIN" ColumnName="CHECKIN" />
+                <ScalarProperty Name="T_TYPE" ColumnName="T_TYPE" />
+                <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+                <ScalarProperty Name="CLIENT_ID" ColumnName="CLIENT_ID" />
+                <ScalarProperty Name="FLIGHT_ID" ColumnName="FLIGHT_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SELECT_RESERVATION_ID" FunctionName="TECAirlinesDBModel.Store.SELECT_RESERVATION_ID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TECAirlinesDBModel.SELECT_RESERVATION_ID_Result">
+                <ScalarProperty Name="RESERVATION_ID" ColumnName="RESERVATION_ID" />
+                <ScalarProperty Name="TICKET_COUNT" ColumnName="TICKET_COUNT" />
+                <ScalarProperty Name="LUGGAGE_COUNT" ColumnName="LUGGAGE_COUNT" />
+                <ScalarProperty Name="SEATS" ColumnName="SEATS" />
+                <ScalarProperty Name="CHECKIN" ColumnName="CHECKIN" />
+                <ScalarProperty Name="T_TYPE" ColumnName="T_TYPE" />
+                <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+                <ScalarProperty Name="CLIENT_ID" ColumnName="CLIENT_ID" />
+                <ScalarProperty Name="FLIGHT_ID" ColumnName="FLIGHT_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SET_SEATS" FunctionName="TECAirlinesDBModel.Store.SET_SEATS" />
+          <FunctionImportMapping FunctionImportName="CHANGE_STATUS" FunctionName="TECAirlinesDBModel.Store.CHANGE_STATUS" />
+          <FunctionImportMapping FunctionImportName="SELECT_RESERVATION_BYCID" FunctionName="TECAirlinesDBModel.Store.SELECT_RESERVATION_BYCID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TECAirlinesDBModel.SELECT_RESERVATION_BYCID_Result">
+                <ScalarProperty Name="RESERVATION_ID" ColumnName="RESERVATION_ID" />
+                <ScalarProperty Name="TICKET_COUNT" ColumnName="TICKET_COUNT" />
+                <ScalarProperty Name="LUGGAGE_COUNT" ColumnName="LUGGAGE_COUNT" />
+                <ScalarProperty Name="SEATS" ColumnName="SEATS" />
+                <ScalarProperty Name="CHECKIN" ColumnName="CHECKIN" />
+                <ScalarProperty Name="T_TYPE" ColumnName="T_TYPE" />
+                <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+                <ScalarProperty Name="CLIENT_ID" ColumnName="CLIENT_ID" />
+                <ScalarProperty Name="FLIGHT_ID" ColumnName="FLIGHT_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GET_CLIENT_ID" FunctionName="TECAirlinesDBModel.Store.GET_CLIENT_ID" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
