@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
+
+    <script src="../js/Ruta.js"></script>
+
+    <title>Registrar Ruta</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+
+    <!-- Custom styles for this template -->
+    <link href="form-validation.css" rel="stylesheet">
+
+
+</head>
+
+<body class="bg-light" ng-app="myApp" ng-controller="appController">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top " style="background-color: #ed6211">
+        <a class="navbar-brand" href="#"><span style="color: #000000">TEC</span>Airlines</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" onclick="location.href = 'Aeropuerto.html'">Home <span
+                            class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!----------------------------------------------------------------------------------------------------------------------------->
+
+    <div class="container" style="margin-top: 1%">
+
+        <div class="row-md">
+            <form class="needs-validation" ng-submit="crearRuta(ruta)" validate>
+                <div class="py-5 text-center">
+                    <h2>Rutas</h2>
+                    <p class="lead">Llene todos los datos necesarios.</p>
+                </div>
+                <!--Columna de Ruta-->
+                <div class="col-md" style="margin-top: 0%">
+
+                    <div class="form-group">
+                        <label for="sel1">Vuelos:</label>
+                        <select class="form-control" id="sel1" ng-model="ruta.FLIGHT_ID" placeholder="Vuelo"
+                            ng-options="vuelo for vuelo in vuelos">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sel1">Origen:</label>
+                        <select class="form-control" id="sel1" ng-model="ruta.ORIGIN" placeholder="Origen"
+                            ng-options="aeropuerto.AIRPORT_NAME for aeropuerto in aeropuertos">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sel1">Destino:</label>
+                        <select class="form-control" id="sel1" ng-model="ruta.DESTINATION" placeholder="Destino"
+                            ng-options="aeropuerto.AIRPORT_NAME for aeropuerto in aeropuertos">
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Millas">Millas:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="ruta.FLIGHT_MILES" placeholder="Millas"
+                                required>
+                            <div class="invalid-feedback" style="width: 100%;">
+                                La cantidad de millas es necesaria.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Cantidad">Capacidad:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="ruta.CAPACITY" placeholder="Cantidad"
+                                required>
+                            <div class="invalid-feedback" style="width: 100%;">
+                                La capacidad es necesario.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="origen">Precio Ejecutivo:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="ruta.EJE_PRICE"
+                                placeholder="Precio Ejecutivo" required>
+                            <div class="invalid-feedback" style="width: 100%;">
+                                El precio ejecutivo es necesario.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="origen">Precio Economico:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="ruta.ECO_PRICE"
+                                placeholder="Precio Turista" required>
+                            <div class="invalid-feedback" style="width: 100%;">
+                                El precio turista es necesario.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="meeting-time">Fecha y Hora:</label>
+                        <!--<input type="datetime-local" id="meeting-time" name="meeting-time" ng-model="ruta.DATE_HOUR"> -->
+                        <input  type="text" value="2019-05-15 21:05" id="datetimepicker"  ng-model = "ruta.DATE_HOUR">
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="origen">Es promocion:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="ruta.IS_PROMOTION" placeholder="Y/N"
+                                required>
+                            <div class="invalid-feedback" style="width: 100%;">
+                                Es necesaro.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="origen">Cantidad de Maletas:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="ruta.LUGGAGE_CAPACITY"
+                                placeholder="Cant Maletas" required>
+                            <div class="invalid-feedback" style="width: 100%;">
+                                El origen es necesario.
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-warning btn-lg btn-block" type="submit" style="margin-right:-100%">
+                        Registrar ruta</button>
+                </div>
+
+            </form>
+        </div>
+
+        <footer class="my-5 pt-5 text-muted text-center text-small">
+            <p class="mb-1">&copy; 2019 TEC Airlines</p>
+        </footer>
+    </div>
+
+    <script type="text/javascript">
+        $('#datetimepicker').datetimepicker({
+            format: 'yyyy-mm-dd hh:ii'
+        });
+    </script>
+
+</body>
+
+</html>

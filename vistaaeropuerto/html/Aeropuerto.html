@@ -1,0 +1,228 @@
+</html>
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>TEC-Airlines Funcionarios</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!----------------------Para cargar el cs de bootstrap--------------------------------------------->
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+
+    <!-----------------------Para poner de fondo de pantalla una imagen------------------------------>
+    <style>
+        body {
+            background-image: url("../recursos/fondo.jpg");
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: #ed6211">
+        <a class="navbar-brand" href="#"><span style="color: #000000">TEC</span>Airlines</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!------------------------barra de navegacion----------------------------->
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" onclick="location.href = 'Aeropuerto.html#'">Home <span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" style="color:aliceblue" href="http://example.com"
+                        id="dropdown01" data-toggle="dropdown" aria-haspopup="true">Opciones</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown01">
+
+
+                        <!--------------------Todas las opciones del Dropdown para abrir cada html-------------------------------------->
+                        <a class="dropdown-item" href="#" onclick="location.href = 'Registrar.html'">Registrar Usuario</a>         <!--  html    -->
+                        <a class="dropdown-item" href="#" onclick="location.href = 'SearchFlights.html'">Busqueda De Vuelos</a>    <!--  html    -->
+                        <a class="dropdown-item" href="#" onclick="location.href = 'Promociones.html'">Promociones</a>             <!--  html    -->
+                        <a class="dropdown-item" href="#" onclick="location.href = 'Chequeo.html'">Chequeo De Pasajeros</a>        <!--  html    -->
+                        <a class="dropdown-item" href="#" onclick="location.href = 'RegistrarVuelo.html'">Registro De Vuelos</a>   <!--  html    -->
+                        <a class="dropdown-item" href="#" onclick="location.href = 'AperturaVuelo.html'">Apertura De Vuelos</a>    <!--  html    -->
+                        <a class="dropdown-item" href="#" onclick="location.href = 'CerrarVuelo.html'">Cierre De Vuelos</a>        <!--  html    -->
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <main role="main">
+
+        <!-- Jumbotron -->
+        <div class="jumbotron" style="background-color: #ed6211">
+            <div class="container" style="margin-left: -30px; margin-bottom: -3%">
+                <h1 class="display-4" style="color:aliceblue"> <b>Funcionarios</b></h1>
+            </div>
+        </div>
+
+        <!--   Container principal   -->
+        <div class="container">
+
+            <!--   Arreglo de cards para las opciones que brinda el aeropuerto   -->
+            <div class="card-deck mb-3 text-center">
+                <div class="row">
+
+                    <!--   Carta de registrar   -->
+                    <!--   Abre el html donde se registra diferentes entidades   -->
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-header">
+                                <h4 class="my-0 font-weight-normal">Registrar</h4>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled mt-3 mb-4">
+                                    <li>Registrar.</li>
+                                </ul>
+                                <button type="button" class="btn btn-lg btn-block btn-warning"
+                                    onclick="location.href = 'Registrar.html'">Ir a registrar</button>              <!--  html    -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--   Carta de buscar   -->
+                    <!--   Abre el html donde se busca varias entidades de la aerolinea   -->
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-header">
+                                <h4 class="my-0 font-weight-normal">Buscar</h4>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled mt-3 mb-4">
+                                    <li>Buscar algun tipo de dato.</li>
+                                </ul>
+                                <button type="button" class="btn btn-lg btn-block btn-warning"
+                                    onclick="location.href = 'Buscador.html'">Ir a buscar</button>              <!--  html    -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--   Carta de Registrar un vuelo   -->
+                    <!--   Abre el html donde se crea un nuevo vuelo a la aerolinea   -->
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-header">
+                                <h4 class="my-0 font-weight-normal">Registrar Vuelo</h4>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled mt-3 mb-4">
+                                    <li>Registrar un nuevo vuelo.</li>
+                                </ul>
+                                <button type="button" class="btn btn-lg btn-block btn-warning"
+                                    onclick="location.href = 'RegistrarVuelo.html'">Ir a registrar vuelo</button>              <!--  html    -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--   Carta de crear Ruta   -->
+                    <!--   Abre el html donde se crea una nueva ruta para un vuelo   -->
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-header">
+                                <h4 class="my-0 font-weight-normal">Crear Ruta</h4>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled mt-3 mb-4">
+                                    <li>Se procedera a crear una ruta.</li>
+                                </ul>
+                                <button type="button" class="btn btn-lg btn-block btn-warning"
+                                    onclick="location.href = 'CrearRuta.html'">              <!--  html    -->
+                                    Ir a crear ruta</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--   Carta de Chequeo   -->
+                    <!--   Abre el html donde se chequea un cliente   -->
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-header">
+                                <h4 class="my-0 font-weight-normal">Chequeo</h4>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled mt-3 mb-4">
+                                    <li>Ir a chequeo de pasajeros.</li>
+                                </ul>
+                                <button type="button" class="btn btn-lg btn-block btn-warning"
+                                    onclick="location.href = 'Chequeo.html'">              <!--  html    -->
+                                    Ir a chequeo</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--   Carta de CheckIn   -->
+                    <!--   Abre el hmtl donde se le hace el checkin a un cliente   -->
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-header">
+                                <h4 class="my-0 font-weight-normal">CheckIn</h4>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled mt-3 mb-4">
+                                    <li>Confirmar vuelo.</li>
+                                </ul>
+                                <button type="button" class="btn btn-lg btn-block btn-warning"
+                                    onclick="location.href = 'AperturaVuelo.html'">              <!--  html    -->
+                                    CheckIn en un
+                                    vuelo</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--   Carta de Cerrar Vuelo   -->
+                    <!--   Abre el html donde se cierra un vuelo   -->
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-header">
+                                <h4 class="my-0 font-weight-normal">Cierre Vuelo</h4>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled mt-3 mb-4">
+                                    <li>Se procedera a cerrar el vuelo.</li>
+                                </ul>
+                                <button type="button" class="btn btn-lg btn-block btn-warning"
+                                    onclick="location.href = 'CerrarVuelo.html'">              <!--   html   -->
+                                    Cerrar Vuelo</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <hr>
+        </div>
+        <!-- /container -->
+
+    </main>
+
+
+
+
+    <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">&copy; 2019 TEC Airlines</p>
+    </footer>
+
+    <!--   Scripts para el dropdown   -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>
