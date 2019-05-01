@@ -1,0 +1,448 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/SearchFlights.css" />
+    <link rel="stylesheet" href="../css/HomeTECAirlines.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script type="text/javascript" src="../js/client.js"></script>
+
+    <title>TECAirlines-Search</title>
+</head>
+<body ng-app="myApp" ng-controller = "myCtrl">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="HomeTECAirlines.html" style="font-variant-caps: small-caps;"><span style="color: #ed6211; font-weight: bold;">TEC</span>Airlines</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link btn" ng-click="homeP()">Inicio <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            More
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" ng-click = "buscador()">Buscar Vuelos</a>
+                            <a class="dropdown-item" ng-click="promotionR()">Promociones</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <a ng-show = "login" ng-click="accountPage()"><i class="fas fa-user-circle fa-2x"></i></a>
+            <a class="btn" ng-show="nologin" ng-click="loginPage()">Ingresar</a>
+            <a class="btn" ng-show="nologin" ng-click="clientR()">Registrar</a>
+            <a class="btn" ng-show="login" ng-click="reservationActivationPage()">Mis Reservaciones</a>
+            <a class="btn" ng-show="login" ng-click="logout()">Salir</a>
+        </nav>
+    </header>
+    <div ng-show="reservationI">
+            <form class="col-md-10">
+                <table class="table table-striped table-sm">
+                    <tr>
+                        <th>Vuelo ID</th>
+                        <th>Personal ID</th>
+                        <th>Cantidad de maletas</th>                                
+                        <th>Precio</th>
+                        <th>ID de Reservación</th>
+                        <th>Clase</th>
+                        <th>Cantidad de tiquetes</th>
+                    </tr>
+                    <tr ng-repeat = "reservationInfo in myreservations">
+                        <th>{{reservationInfo.FLIGHT_ID}}</th>
+                        <th>{{reservationInfo.CLIENT_ID}}</th>
+                        <th>{{reservationInfo.LUGGAGE_COUNT}}</th>
+                        <th>{{reservationInfo.PRICE}}</th>
+                        <th>{{reservationInfo.RESERVATION_ID}}</th>
+                        <th>{{reservationInfo.T_TYPE}}</th>
+                        <th>{{reservationInfo.TICKET_COUNT}}</th>
+                    </tr>
+                </table>
+        </form>
+        </div>
+    <div ng-show="buscarVuelo">
+        <form class="col-md-10" ng-submit="buscar(flight)">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputFrom" class="col-md-12">
+                        From(*)
+                        <select id="inputFrom" class="form-control" ng-model="flight.ORIGIN" ng-options="place.AIRPORT_NAME for place in places" required></select>
+                    </label>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputTo" class="col-md-12">
+                        To(*)
+                        <select id="inputTo" class="form-control" ng-model="flight.DESTINATION" ng-options="place.AIRPORT_NAME for place in places" required></select>
+                    </label>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-0">
+                    <label class="col-md-1">
+                        <button type="submit" class="btn btn-primary" style="background-color: #ff6a00; border-color: #cf4f05">Search</button>
+                    </label>
+                </div>
+                <div class="form-group col-md-1">
+                    <label class="col-md-1">
+                        <button type="reset" class="btn btn-primary" style="background-color: #ff6a00; border-color: #cf4f05">Clear</button>
+                    </label>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div ng-show="reservarVuelo" style="padding-top: 5%;">
+        <table class="table table-striped table-sm col-md-10" style="margin:0 auto; background-color: #ffffff;">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Origen</th>
+                    <th>Destino</th>
+                    <th>Fecha</th>
+                    <th>Accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="vuelo in vuelos">
+                    <td>{{vuelo.FLIGHT_ID}}</td>
+                    <td>{{vuelo.ORIGIN}}</td>
+                    <td>{{vuelo.DESTINATION}}</td>
+                    <td>{{vuelo.DATE_HOUR}}</td>
+                    <td>
+                        <button class="btn btn-warning" ng-click = "verifyLogin(vuelo)">Reservar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+            <form ng-show = "reservacion" ng-submit="addReservation(reservation)">
+                <h3 style="color: white;background-color:  #ed6211">Información Necesaria</h3>
+                <div class="row">
+                    <div class="col">
+                        <label for="tickets"># de tiquetes:</label>
+                        <input type="number" ng-model = "reservation.TICKET_COUNT" min = 0 required>
+                    </div>
+                    <div class="col">
+                        <label>Clase:</label>
+                        <select class="btn btn-secondary" name="typeTicket" id="type" style="border-color:  #ed6211; background-color:  #ed6211" ng-model = "reservation.T_TYPE">
+                            <option value="EJECUTIVO">EJECUTIVO</option>
+                            <option value="ECONOMICO">ECONOMICO</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label for="suitcases">Maletas:</label>
+                        <input type="number" ng-model = "reservation.LUGGAGE_COUNT" min="0" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="Id">Personal ID:</label>
+                        <input type="number" class="form-control" id="id" ng-model = "reservation.CLIENT_ID" pattern="[0-9]{1} ?[0-9]{4} ?[0-9]{4}" placeholder="x xxxx xxxx" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="background-color: #ff6a00; border-color: #cf4f05">Submit</button>
+            </form>
+            <div class="container" style="margin-top:30px" ng-show = "pageLogin">
+                    <form ng-submit = "loginUser(log)"> 
+                        <div class="form-group">
+                            <label for="email">Email address:</label>
+                            <input type="email" class="form-control" id="email" ng-model = "log.CLIENT_EMAIL" placeholder="example@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd">Password:</label>
+                            <input type="password" class="form-control" ng-model = "log.CLIENT_PASSWRD" id="pwd" required>
+                        </div>
+        
+                        <button type="submit" class="btn btn-primary" style="background-color: #ff6a00; border-color: #cf4f05">Submit </button>
+                        <div class="container" style="margin-top:10px"></div>
+                            <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Not registered?</h4>
+                                        <p class="card-text">Try here</p>
+                                        <a class="btn btn-primary" ng-click="clientR()" class="card-link">Register as a Client</a>
+                                        <a class="btn btn-primary" ng-click = "studentR()" class="card-link">Register as a Student</a>
+                                    </div>
+                            </div>
+                        </div>
+                  </form> 
+            </div>
+            <div class="row" ng-show="clientRegister">
+                    <div class="col-sm-8">
+                            <form ng-submit = "createUser(user)">
+                                <div class="form-group">
+                                        <label for="fname">First Name:</label>
+                                        <input type="text" class="form-control" id="fname" ng-model = "user.CLIENT_FNAME" required>
+                                </div>
+                                <div class="form-group">
+                                            <label for="lname">Last Name:</label>
+                                            <input type="text" class="form-control" id="lname" ng-model = "user.CLIENT_LNAME" required>
+                                </div>
+                                <div class="form-group">
+                                        <label for="id">Personal ID :</label>
+                                        <input type="number" class="form-control" id="id" ng-model = "user.CLIENT_ID" pattern="[0-9]{1} ?[0-9]{4} ?[0-9]{4}" placeholder="x xxxx xxxx" required>
+                                </div>  
+                                <div class="form-group">
+                                        <label for="pnumber">Phone Number:</label>
+                                        <input type="number" class="form-control" id="pnumber" ng-model = "user.CLIENT_PHONENO" pattern="[0-9]{8}" placeholder="8888 8888" required>
+                                </div> 
+                                <div class="form-group">
+                                    <label for="pnumber">Card Number:</label>
+                                    <input type="number" class="form-control" id="pnumber" ng-model = "user.CLIENT_CARDNO" pattern="[0-9]{16}" placeholder="8888 8888 8888 8888" required>
+                            </div>    
+                                <div class="form-group">
+                                    <label for="email">Email address:</label>
+                                    <input type="email" class="form-control" id="email" ng-model = "user.CLIENT_EMAIL" placeholder="example@email.com" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pwd">Password:</label>
+                                    <input type="password" class="form-control" id="pwd" ng-model = "user.CLIENT_PASSWRD" required>
+                                </div>
+                
+                                <button type="submit" class="btn btn-primary" style="background-color: #ff6a00; border-color: #cf4f05"> Submit</button>
+                          </form> 
+                    </div>
+                    <div class="col-sm-4">
+                            <div class="card" style="width:400px">
+                                    <img class="card-img-top" src="../Recursos/Client.png" alt="Card image" style="width:100%">
+                                    <div class="card-body">
+                                      <h4 class="card-title">What about regular clients? We got you too.</h4>
+                                      <p class="card-text">Regular clients get the same excellent travel experience without the miles benefit students get.</p>
+                                    </div>
+                            </div>
+                    </div>    
+                </div>
+                <div class="row" ng-show="studentRegister">
+                        <div class="col-sm-8">
+                                <form ng-submit = "createUClient(client)">
+                                    <div class="form-group">
+                                            <label for="fname">First Name:</label>
+                                            <input type="text" class="form-control" id="fname" ng-model = "client.CLIENT_FNAME" required>
+                                    </div>
+                                    <div class="form-group">
+                                                <label for="lname">Last Name:</label>
+                                                <input type="text" class="form-control" id="lname" ng-model = "client.CLIENT_LNAME" required>
+                                    </div>
+                                    <div class="form-group">
+                                            <label for="id">Personal ID :</label>
+                                            <input type="number" class="form-control" id="id" pattern="[0-9]{1} ?[0-9]{4} ?[0-9]{4}" placeholder="x xxxx xxxx"  ng-model = "client.CLIENT_ID" required>
+                                    </div>   
+                                    <div class="form-group">
+                                            <label for="pnumber">Phone Number:</label>
+                                            <input type="number" class="form-control" id="pnumber" ng-model = "client.CLIENT_PHONENO" pattern="[0-9]{8}" placeholder="8888 8888" required>
+                                    </div>
+                                    <div class="form-group">
+                                            <label for="pnumber">Phone Number:</label>
+                                            <input type="number" class="form-control" id="pnumber" ng-model = "client.CLIENT_CARDNO" pattern="[0-9]{16}" placeholder="8888 8888 8888 8888" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sel1">University:</label>
+                                        <select class="form-control" id="sel1" ng-model="client.CLIENT_UID" ng-options = "option.UNIVERSITY_NAME for option in options">
+                                        </select>
+                                    </div> 
+                                    <div class="form-group">
+                                            <label for="uid">University ID :</label>
+                                            <input type="number" class="form-control" ng-model = "client.UNIVERSITY_ID" id="uid" pattern="[0-9]{4} ?[0-9]{10}" placeholder=" xxxxxxxxxx" required>
+                                    </div>    
+                                    <div class="form-group">
+                                        <label for="email">Email address:</label>
+                                        <input type="email" class="form-control" id="email" placeholder="example@email.com" ng-model = "client.CLIENT_EMAIL" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pwd">Password:</label>
+                                        <input type="password" class="form-control" id="pwd" ng-model = "client.CLIENT_PASSWRD" required>
+                                    </div>
+                    
+                                    <button type="submit" class="btn btn-primary" style="background-color: #ff6a00; border-color: #cf4f05">Submit</button>
+                                </form> 
+                        </div>
+                        <div class="col-sm-4">
+                                <div class="card" style="width:400px">
+                                        <img class="card-img-top" src="../Recursos/Student.jpg" alt="Card image" style="width:100%">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Student Benefits? We got you boo.</h4>
+                                            <p class="card-text">As a regitered student you get the benefit of acumulating miles so you can use them in order to save some money on your next flight.</p>
+                                        </div>
+                                </div>
+                        </div>
+                    </div>
+                    <div>
+                        <form ng-show = "account" class="col-md-10" ng-submit = "getAccount(CLIENT_ID)">
+                            <div class="form-group">
+                                <label>Personal ID:</label>
+                                <input type="number" class="form-control" id="id" pattern="[0-9]{1} ?[0-9]{4} ?[0-9]{4}" placeholder="x xxxx xxxx"  ng-model = "CLIENT_ID" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="background-color: #ff6a00; border-color: #cf4f05">Submit</button>
+                        </form>
+                    </div>
+                        <div ng-show="accountInfo">
+                            <form class="col-md-10">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="col-md-12">
+                                        First Name
+                                        <input type="text" class="form-control" id="outputFirstName" ng-model="client[0].CLIENT_FNAME" />
+                                    </label>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="col-md-12">
+                                        Last Name
+                                        <input type="text" class="form-control" id="outputLastName" ng-model="client[0].CLIENT_LNAME" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="col-md-6">
+                                        Personal ID
+                                        <input type="text" class="form-control" id="outputPersonalID" ng-model="client[0].CLIENT_ID" />
+                                    </label>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="col-md-6">
+                                        Phone Number
+                                        <input type="tel" class="form-control" id="outputPhoneNumber" ng-model="client[0].CLIENT_PHONENO" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="col-md-6">
+                                        Card Number
+                                        <input type="text" class="form-control" id="outputPersonalID" ng-model="card" />
+                                    </label>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="col-md-6">
+                                        Miles
+                                        <input type="tel" class="form-control" id="outputPhoneNumber" ng-model="client[0].CLIENT_MILES" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="col-md-12">
+                                        University Name
+                                        <input type="text" class="form-control" id="outputUniversityName" ng-model="client[0].UNIVERSITY_NAME" />
+                                    </label>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="col-md-12">
+                                        University ID
+                                        <input type="text" class="form-control" id="outputUniversityID" ng-model="client[0].CLIENT_UID" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="col-md-12">
+                                        Email Address
+                                        <input type="email" class="form-control" id="outputEmailAddress" ng-model="client[0].CLIENT_EMAIL" />
+                                    </label>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="col-md-12">
+                                        Password
+                                        <input type="password" class="form-control" id="outputPassword" ng-model="client[0].CLIENT_PASSWRD" />
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
+                        </div>
+                        <div class="container" style="margin-top: 1%" ng-show = "promotions">
+
+                                <div class="row-md">
+                                    <form class="needs-validation" validate>
+                                        <div class="needs-validation" validate>
+                                            <div class="py-5 text-center">
+                                                <h2>Promociones</h2>
+                                                <p class="lead">Seleccione a cual vuelo pertenece.</p>
+                                            </div>
+                                            <table class="table table-striped table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Vuelo</th>
+                                                        <th>Origen</th>
+                                                        <th>Destino</th>                                
+                                                        <th>Precio Ejecutivo</th>
+                                                        <th>Precio Economico</th>
+                                                        <th>Fecha</th>
+                                                        <th>Promocion</th>
+                                                        <th>Accion</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="vuelo in promociones">
+                                                        <td>{{vuelo.FLIGHT_ID}}</td>
+                                                        <td>{{vuelo.ORIGIN}}</td>
+                                                        <td>{{vuelo.DESTINATION}}</td>
+                                                        <td>{{vuelo.EJE_PRICE}}</td>
+                                                        <td>{{vuelo.ECO_PRICE}}</td>
+                                                        <td>{{vuelo.DATE_HOUR}}</td>
+                                                        <td><i class="fas fa-tags" style="color: #ed6211"></i><span style="font-variant-caps: small-caps">  ON Sale</span></td>
+                                                        <td><button class="btn btn-warning" ng-click="verifyLogin(vuelo)" style="color: aliceblue">Reservar</button></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                        
+                        
+                                            </div>
+                                        </div>
+                        
+                                    </form>
+                                </div>
+                            </div>
+                            <div id="carouselExampleSlidesOnly" class="carousel slide col-md-6" data-ride="carousel" ng-show = "home">
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active" data-interval="2500">
+                                            <img src="../recursos/Publicidad1.jpg" class="d-block w-100" alt="...">
+                                        </div>
+                                        <div class="carousel-item" data-interval="2500">
+                                            <img src="../recursos/Publicidad2.jpg" class="d-block w-100" alt="...">
+                                            <div class="carousel-caption">
+                                                <h4 style="color: #000000; font-variant-caps: small-caps">Jamaica</h4>
+                                                <p style="color: #000000">Sandals</p>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item" data-interval="2500">
+                                            <img src="../recursos/Publicidad3.jpg" class="d-block w-100" alt="...">
+                                            <div class="carousel-caption">
+                                                <h4 style="color: #000000; font-variant-caps: small-caps">Tokio</h4>
+                                                <p style="color: #000000">Akihabara</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
+                                    </a>
+                                    <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
+                                    </a>
+                                </div>
+                                <div>
+                                    <form ng-show = "client_id_reservation" class="col-md-10" ng-submit = "reservationInfoPage(CLIENT_ID)">
+                                        <div class="form-group">
+                                            <label>Personal ID:</label>
+                                            <input type="number" class="form-control" id="id" pattern="[0-9]{1} ?[0-9]{4} ?[0-9]{4}" placeholder="x xxxx xxxx"  ng-model = "CLIENT_ID" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary" style="background-color: #ff6a00; border-color: #cf4f05">Submit</button>
+                                    </form>
+                                </div>
+    <footer>
+        <span>&copy;TECAirlines</span>
+    </footer>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

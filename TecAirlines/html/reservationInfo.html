@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/SearchFlights.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script type="text/javascript" src="../js/client.js"></script>
+
+    <title>TECAirlines-Search</title>
+</head>
+<body ng-app="myApp" ng-controller = "myCtrl">
+        <div ng-show="reservationI">
+                <form class="col-md-10">
+                    <table>
+                        <tr>
+                            <th>Vuelo ID</th>
+                            <th>Personal ID</th>
+                            <th>Cantidad de maletas</th>                                
+                            <th>Precio</th>
+                            <th>ID de Reservación</th>
+                            <th>Clase</th>
+                            <th>Cantidad de tiquetes</th>
+                        </tr>
+                        <tr ng-repeat = "reservationInfo in myreservations">
+                            <th>{{reservationInfo.FLIGHT_ID}}</th>
+                            <th>{{reservationInfo.CLIENT_ID}}</th>
+                            <th>{{reservationInfo.LUGGAGE_COUNT}}</th>
+                            <th>{{reservationInfo.PRICE}}</th>
+                            <th>{{reservationInfo.RESERVATION_ID}}</th>
+                            <th>{{reservationInfo.T_TYPE}}</th>
+                            <th>{{reservationInfo.TICKET_COUNT}}</th>
+                        </tr>
+                    </table>
+            </form>
+            </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

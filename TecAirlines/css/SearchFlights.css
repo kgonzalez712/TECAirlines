@@ -1,0 +1,42 @@
+﻿body {
+    background-image: url("../recursos/fondoTECAirlines.jpg");
+    background-size: cover;
+}
+
+nav{
+    background-color: #ffffff;
+}
+
+form{
+    margin: 0 auto;
+    margin-top: 6%;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding-top: 1.5%;
+    border-radius: 10px;
+}
+
+label {
+    color: #cf4f05;
+    font-weight: 500;
+    font-style: italic;
+    font-variant-caps:small-caps;
+}
+
+footer {
+    margin-top: 6%;
+    text-align: center;
+    font-weight: 400;
+    font-variant-caps: small-caps;
+    color: #ffffff;
+}
+
+i.fas {
+    text-decoration: none;
+    color: #cf4f05;
+    margin-top: 1%;
+    float: right;
+}
+
+i.fas:hover{
+    color: #983a03; 
+}
